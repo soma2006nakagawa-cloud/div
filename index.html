@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>最寄り避難所検索</title>
+</head>
+
+<body>
+
+<h1>最寄り避難所</h1>
+
+<div id="result">
+現在地を取得しています...
+</div>
+
+<script>
+
+// 2地点間の距離(km)
+function distance(lat1, lon1, lat2, lon2) {
+
+    const R = 6371;
+
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+
+// JSON読込
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+    navigator.geolocation.getCurrentPosition(function(pos){
+
+        const myLat = pos.coords.latitude;
+        const myLng = pos.coords.longitude;
+
+        let nearest = null;
+        let min = Infinity;
+
+        data.shelters.forEach(function(shelter){
+
+            const d = distance(
+                myLat,
+                myLng,
+                shelter.lat,
+                shelter.lng
+            );
+
+            if(d < min){
+                min = d;
+                nearest = shelter;
+            }
+
+        });
+
+        document.getElementById("result").innerHTML = `
+            <h2>${nearest.name}</h2>
+            <p>住所：${nearest.address}</p>
+            <p>収容人数：${nearest.capacity}人</p>
+            <p>距離：約${min.toFixed(2)} km</p>
+
+            <button onclick="window.open('https://www.google.com/maps?q=${nearest.lat},${nearest.lng}')">
+                Googleマップで開く
+            </button>
+        `;
+
+    },
+    function(){
+        document.getElementById("result").innerHTML =
+        "位置情報が取得できません。";
+    });
+
+})
+.catch(function(error){
+    console.log(error);
+});
+
+</script>
+
+</body>
+</html>
