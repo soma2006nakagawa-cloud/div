@@ -1,46 +1,1065 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARモード</title>
+<title>AR避難所モード</title>
+
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-<style>body{margin:0;overflow:hidden;font-family:sans-serif}#debug{position:fixed;top:10px;left:10px;background:rgba(0,0,0,.75);color:#00ff00;padding:10px;z-index:9999;white-space:pre-line;font-size:14px;border-radius:8px}#back{position:fixed;top:10px;right:10px;z-index:9999}#back button{padding:10px 16px;font-size:16px;border:none;border-radius:8px;background:#1976d2;color:white}</style>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+#debug {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,.75);
+    color: #00ff00;
+    padding: 10px;
+    z-index: 9999;
+    white-space: pre-line;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+#back {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+}
+
+#back button {
+    padding: 10px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #1976d2;
+    color: white;
+}
+</style>
 </head>
+
 <body>
+
 <div id="debug">GPS取得待機中...</div>
-<div id="back"><button onclick="location.href='index.html'">戻る</button></div>
+
+<div id="back">
+    <button onclick="location.href='index.html'">戻る</button>
+</div>
+
 <a-scene
-  vr-mode-ui="enabled:false"
-  embedded
-  arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
+    vr-mode-ui="enabled: false"
+    embedded
+    arjs="sourceType: webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
 
-  <a-camera
-    gps-camera
-    rotation-reader
-    camera="far:10000; near:0.1">
-  </a-camera>
+    <a-camera
+        gps-camera
+        rotation-reader
+        camera="far: 10000; near: 0.1">
+    </a-camera>
 
-  <a-entity gps-entity-place="latitude:37.9543091; longitude:139.3294243;">
-    <a-box
-      position="0 10 0"
-      color="red"
-      scale="5 5 5"
-      animation="property:rotation; to:0 360 0; loop:true; dur:5000">
-    </a-box>
-  </a-entity>
 
-  <a-entity gps-entity-place="latitude:37.95852752; longitude:139.3337808;">
-    <a-box
-      position="0 10 0"
-      color="blue"
-      scale="5 5 5"
-      animation="property:rotation; to:0 360 0; loop:true; dur:5000">
-    </a-box>
-  </a-entity>
+    <!-- 外ヶ輪小学校 / 新潟県新発田市中央町5-8-9 -->
+    <a-entity gps-entity-place="latitude:37.9543091; longitude:139.3294243;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="外ヶ輪小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 本丸中学校 / 新潟県新発田市緑町2-7-22 -->
+    <a-entity gps-entity-place="latitude:37.95852752; longitude:139.3337808;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="本丸中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 市民文化会館（中央公民館を含む） / 新潟県新発田市中央町4-11-7 -->
+    <a-entity gps-entity-place="latitude:37.951944; longitude:139.326849;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="市民文化会館（中央公民館を含む）"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- カルチャーセンター / 新潟県新発田市本町4-16-83 -->
+    <a-entity gps-entity-place="latitude:37.95043927; longitude:139.3399293;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="カルチャーセンター"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 健康長寿アクティブ地域交流センター / 新潟県新発田市中央町3-13-3 -->
+    <a-entity gps-entity-place="latitude:37.94876764; longitude:139.3269343;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="健康長寿アクティブ地域交流センター"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 猿橋小学校 / 新潟県新発田市中曽根町3-8-29 -->
+    <a-entity gps-entity-place="latitude:37.95948376; longitude:139.3084674;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="猿橋小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 猿橋中学校 / 新潟県新発田市住吉町1-7-1 -->
+    <a-entity gps-entity-place="latitude:37.95240021; longitude:139.3117062;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="猿橋中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 西新発田高等学校 / 新潟県新発田市西園町3-1-2 -->
+    <a-entity gps-entity-place="latitude:37.95403457; longitude:139.3199501;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="西新発田高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 御免町小学校 / 新潟県新発田市大栄町4-5-33 -->
+    <a-entity gps-entity-place="latitude:37.94367264; longitude:139.3212481;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="御免町小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 第一中学校 / 新潟県新発田市御幸町4-5-25 -->
+    <a-entity gps-entity-place="latitude:37.94139881; longitude:139.3165164;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="第一中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田農業高等学校 / 新潟県新発田市大栄町6-4-23 -->
+    <a-entity gps-entity-place="latitude:37.94141359; longitude:139.3267353;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田農業高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田南高等学校 / 新潟県新発田市大栄町3-6-6 -->
+    <a-entity gps-entity-place="latitude:37.94110908; longitude:139.3242402;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田南高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 二葉小学校 / 新潟県新発田市中田町3-6-1 -->
+    <a-entity gps-entity-place="latitude:37.9621745; longitude:139.3375399;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="二葉小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新潟職業能力開発短期大学校 / 新潟県新発田市新富町1-7-21 -->
+    <a-entity gps-entity-place="latitude:37.95588068; longitude:139.3382848;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新潟職業能力開発短期大学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 住吉小学校 / 新潟県新発田市住吉町3-6-22 -->
+    <a-entity gps-entity-place="latitude:37.94628758; longitude:139.3071864;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="住吉小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 東豊小学校 / 新潟県新発田市東新町4-10-8 -->
+    <a-entity gps-entity-place="latitude:37.94562642; longitude:139.3461021;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="東豊小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 東豊コミュニティ防災センター / 新潟県新発田市豊町4-8-30 -->
+    <a-entity gps-entity-place="latitude:37.942744; longitude:139.341024;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="東豊コミュニティ防災センター"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田高等学校 / 新潟県新発田市豊町3-7-6 -->
+    <a-entity gps-entity-place="latitude:37.93963891; longitude:139.3375867;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田商業高等学校 / 新潟県新発田市板敷521-1 -->
+    <a-entity gps-entity-place="latitude:37.95026131; longitude:139.3511243;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田商業高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 東小学校 / 新潟県新発田市五十公野4862 -->
+    <a-entity gps-entity-place="latitude:37.92839162; longitude:139.3511368;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="東小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 東中学校 / 新潟県新発田市五十公野4981 -->
+    <a-entity gps-entity-place="latitude:37.9289537; longitude:139.3525705;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="東中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧松浦小学校 / 新潟県新発田市法正橋39 -->
+    <a-entity gps-entity-place="latitude:37.90173725; longitude:139.3356871;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧松浦小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧米倉小学校 / 新潟県新発田市大槻4211-260 -->
+    <a-entity gps-entity-place="latitude:37.88772363; longitude:139.3905308;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧米倉小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田市青少年宿泊施設（あかたにの家） / 新潟県新発田市上赤谷2173 -->
+    <a-entity gps-entity-place="latitude:37.83981884; longitude:139.4180246;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田市青少年宿泊施設（あかたにの家）"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 川東小学校 / 新潟県新発田市下羽津1938 -->
+    <a-entity gps-entity-place="latitude:37.93460048; longitude:139.3860503;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="川東小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 県立新発田竹俣特別支援学校 / 新潟県新発田市下楠川702 -->
+    <a-entity gps-entity-place="latitude:37.93801617; longitude:139.4007062;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="県立新発田竹俣特別支援学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧車野小学校 / 新潟県新発田市大友17-1 -->
+    <a-entity gps-entity-place="latitude:37.90845212; longitude:139.3878393;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧車野小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 川東中学校 / 新潟県新発田市下羽津1566-1 -->
+    <a-entity gps-entity-place="latitude:37.9339893; longitude:139.3871205;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="川東中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧菅谷小学校 / 新潟県新発田市繁山70 -->
+    <a-entity gps-entity-place="latitude:37.97162478; longitude:139.4165422;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧菅谷小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 七葉小学校 / 新潟県新発田市黒岩66 -->
+    <a-entity gps-entity-place="latitude:37.964928; longitude:139.3715686;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="七葉小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 七葉中学校 / 新潟県新発田市上館84-2 -->
+    <a-entity gps-entity-place="latitude:37.97104288; longitude:139.3626871;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="七葉中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 佐々木小学校 / 新潟県新発田市則清856 -->
+    <a-entity gps-entity-place="latitude:37.94441191; longitude:139.281706;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="佐々木小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 佐々木中学校 / 新潟県新発田市則清102 -->
+    <a-entity gps-entity-place="latitude:37.94050063; longitude:139.2870939;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="佐々木中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 新発田中央高等学校 / 新潟県新発田市曽根570 -->
+    <a-entity gps-entity-place="latitude:37.95392926; longitude:139.2861246;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="新発田中央高等学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 中井保健センター / 新潟県新発田市小舟町2-3-31 -->
+    <a-entity gps-entity-place="latitude:37.969786; longitude:139.327821;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="中井保健センター"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 豊浦小学校 / 新潟県新発田市大伝465-2 -->
+    <a-entity gps-entity-place="latitude:37.91991131; longitude:139.3108194;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="豊浦小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧天王小学校 / 新潟県新発田市天王18 -->
+    <a-entity gps-entity-place="latitude:37.90375026; longitude:139.2715007;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧天王小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧荒橋小学校 / 新潟県新発田市荒町1483 -->
+    <a-entity gps-entity-place="latitude:37.92711174; longitude:139.3288739;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧荒橋小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 旧本田小学校 / 新潟県新発田市本田12 -->
+    <a-entity gps-entity-place="latitude:37.88438073; longitude:139.2910726;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="旧本田小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 豊浦中学校 / 新潟県新発田市乙次50 -->
+    <a-entity gps-entity-place="latitude:37.91247789; longitude:139.3057793;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="豊浦中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 紫雲寺小学校 / 新潟県新発田市稲荷岡2389 -->
+    <a-entity gps-entity-place="latitude:38.0146328; longitude:139.3178381;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="紫雲寺小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 米子小学校 / 新潟県新発田市真野原外1773 -->
+    <a-entity gps-entity-place="latitude:37.9993404; longitude:139.3018339;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="米子小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 藤塚小学校 / 新潟県新発田市藤塚浜4063-3 -->
+    <a-entity gps-entity-place="latitude:38.03432447; longitude:139.3084049;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="藤塚小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 紫雲寺中学校 / 新潟県新発田市真野原外3499 -->
+    <a-entity gps-entity-place="latitude:38.01546755; longitude:139.3164804;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="紫雲寺中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 大島体育館 / 新潟県新発田市大中島37 -->
+    <a-entity gps-entity-place="latitude:38.00520519; longitude:139.3363856;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="大島体育館"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川小学校 / 新潟県新発田市上今泉366 -->
+    <a-entity gps-entity-place="latitude:37.9900329; longitude:139.3588473;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川小学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川中学校 / 新潟県新発田市川口330 -->
+    <a-entity gps-entity-place="latitude:37.98968721; longitude:139.3636123;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川中学校"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川地区公民館 / 新潟県新発田市住田547-1 -->
+    <a-entity gps-entity-place="latitude:37.98981129; longitude:139.3668789;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川地区公民館"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川地区体育館 / 新潟県新発田市住田547 -->
+    <a-entity gps-entity-place="latitude:37.99005048; longitude:139.367041;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川地区体育館"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川コミュニティセンター / 新潟県新発田市下小中山1107 -->
+    <a-entity gps-entity-place="latitude:38.0171186; longitude:139.3802821;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川コミュニティセンター"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
+    <!-- 加治川地区公民館中川分館 / 新潟県新発田市押廻1447 -->
+    <a-entity gps-entity-place="latitude:37.98428661; longitude:139.3397351;">
+        <a-box
+            position="0 10 0"
+            color="red"
+            scale="5 5 5"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
+        <a-text
+            value="加治川地区公民館中川分館"
+            position="0 18 0"
+            align="center"
+            color="yellow"
+            scale="20 20 20"
+            look-at="[gps-camera]">
+        </a-text>
+    </a-entity>
+
 
 </a-scene>
+
+<script>
+const d = document.getElementById('debug');
+
+navigator.geolocation.watchPosition(
+    p => {
+        d.textContent =
+`現在位置
+緯度:${p.coords.latitude.toFixed(8)}
+経度:${p.coords.longitude.toFixed(8)}
+GPS精度:${p.coords.accuracy.toFixed(1)} m
+AR地点数:51件`;
+    },
+    e => {
+        d.textContent = e.message;
+    },
+    {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 10000
+    }
+);
+</script>
 
 </body>
 </html>
