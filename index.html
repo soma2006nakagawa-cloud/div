@@ -1,18 +1,86 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>避難所検索</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-</head><body>
-<header><h1>最寄り避難所検索</h1></header>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>避難所検索システム</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+</head>
+
+<body>
+
+<header>
+
+<h1>避難所検索システム</h1>
+
+</header>
+
 <div class="container">
-<input id="search" placeholder="避難所名で検索">
-<button id="reload">現在地更新</button>
-<div id="info">読み込み中...</div>
-<ul id="list"></ul>
-<div id="map"></div>
+
+<div class="searchBox">
+
+<input
+type="text"
+id="search"
+placeholder="避難所名・住所で検索">
+
+<button id="searchBtn">
+検索
+</button>
+
+<button id="reloadBtn">
+現在地更新
+</button>
+
 </div>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<div id="nearestCard" class="card">
+
+<h2>最寄り避難所</h2>
+
+<div id="nearestInfo">
+
+現在地を取得しています...
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>近い避難所 TOP5</h2>
+
+<ul id="top5">
+
+</ul>
+
+</div>
+
+
+<div class="card">
+
+<h2>地図</h2>
+
+<div id="map"></div>
+
+</div>
+
+</div>
+
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
 <script src="script.js"></script>
-</body></html>
+
+</body>
+
+</html>
