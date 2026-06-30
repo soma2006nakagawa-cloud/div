@@ -411,27 +411,3 @@
   ]
 }
 
-{
-  "spots": [
-    {
-      "id": 1,
-      "name": "新発田城",
-      "category": "歴史",
-      "address": "新潟県新発田市大手町6-4-31",
-      "lat": 37.9497,
-      "lng": 139.3275,
-      "description": "日本100名城の一つ。",
-      "image": "images/shibata_castle.jpg"
-    },
-    {
-      "id": 2,
-      "name": "清水園",
-      "category": "庭園",
-      "address": "新潟県新発田市大栄町7丁目",
-      "lat": 37.9445,
-      "lng": 139.3328,
-      "description": "国指定名勝の日本庭園。",
-      "image": "images/shimizuen.jpg"
-    }
-  ]
-}
