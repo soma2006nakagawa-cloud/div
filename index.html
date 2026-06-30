@@ -38,24 +38,6 @@
 
 </div>
 
-//AR
-<button id="arBtn">ARモード</button>
-
-<div id="arContainer" >
-    <div id="debug">GPS取得待機中...</div>
-
-    <a-scene
-        vr-mode-ui="enabled:false"
-        embedded
-        arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
-
-        <a-camera
-            gps-camera
-            rotation-reader
-            camera="far:10000; near:0.1">
-        </a-camera>
-
-    </a-scene>
 </div>
 
 <div class="card">
@@ -85,8 +67,6 @@ src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 
 <script src="script.js"></script>
 
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
 <script src="script.js"></script>
 </body>
