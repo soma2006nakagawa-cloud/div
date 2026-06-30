@@ -1,0 +1,6 @@
+body{margin:0;font-family:sans-serif;background:#eef5ff}
+header{background:#1976d2;color:#fff;text-align:center;padding:12px}
+.container{max-width:900px;margin:auto;padding:15px}
+#info,#list{background:#fff;padding:12px;border-radius:8px;margin:10px 0}
+#map{height:450px;border-radius:8px}
+input,button{padding:8px;margin:4px}
