@@ -1,16 +1,460 @@
-let map,markers=[],line,my;const info=document.getElementById('info'),list=document.getElementById('list');
-function d(a,b,c,e){const R=6371,x=(c-a)*Math.PI/180,y=(e-b)*Math.PI/180,h=Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));}
-fetch('data.json').then(r=>r.json()).then(j=>{window.s=j.shelters;locate();});
-document.getElementById('reload').onclick=locate;
-document.getElementById('search').oninput=e=>{if(!map)return;markers.forEach(m=>map.removeLayer(m));markers=[];s.filter(v=>v.name.includes(e.target.value)).forEach(v=>markers.push(L.marker([v.lat,v.lng]).addTo(map).bindPopup(v.name)));};
-function locate(){navigator.geolocation.getCurrentPosition(p=>{let A=p.coords.latitude,B=p.coords.longitude;
-let arr=s.map(v=>({...v,dist:d(A,B,v.lat,v.lng)})).sort((x,y)=>x.dist-y.dist),n=arr[0];
-info.innerHTML=`<h2>${n.name}</h2><p>${n.address}</p><p>収容:${n.capacity}人</p><p>${n.dist.toFixed(2)}km</p><button onclick="window.open('https://www.google.com/maps?q=${n.lat},${n.lng}')">Googleマップ</button>`;
-list.innerHTML=arr.slice(0,5).map(v=>`<li>${v.name} ${v.dist.toFixed(2)}km</li>`).join('');
-if(!map){map=L.map('map');L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OpenStreetMap'}).addTo(map);}
-markers.forEach(m=>map.removeLayer(m));markers=[];s.forEach(v=>markers.push(L.marker([v.lat,v.lng]).addTo(map).bindPopup(v.name)));
-if(my)map.removeLayer(my);if(line)map.removeLayer(line);
-my=L.circleMarker([A,B],{radius:8,color:'blue'}).addTo(map).bindPopup('現在地');
-let nm=L.circleMarker([n.lat,n.lng],{radius:8,color:'red'}).addTo(map).bindPopup(n.name);markers.push(nm);
-line=L.polyline([[A,B],[n.lat,n.lng]],{color:'red'}).addTo(map);map.fitBounds(line.getBounds(),{padding:[20,20]});
-});}
+let map;
+let currentMarker;
+let nearestMarker;
+let routeLine;
+let shelterMarkers = [];
+
+let shelters = [];
+let currentLat;
+let currentLng;
+
+// 地球の半径(km)
+const R = 6371;
+
+// 2点間距離を計算
+function distance(lat1, lng1, lat2, lng2){
+
+    const dLat = (lat2-lat1) * Math.PI / 180;
+    const dLng = (lng2-lng1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1*Math.PI/180) *
+        Math.cos(lat2*Math.PI/180) *
+        Math.sin(dLng/2) * Math.sin(dLng/2);
+
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+}
+
+
+// JSON読込
+fetch("data.json")
+.then(res => res.json())
+.then(data=>{
+
+    shelters = data.shelters;
+
+    getLocation();
+
+})
+.catch(()=>{
+
+    alert("data.jsonが読み込めません");
+
+});
+
+
+// 現在地取得
+function getLocation(){
+
+    navigator.geolocation.getCurrentPosition(
+
+        position=>{
+
+            currentLat = position.coords.latitude;
+            currentLng = position.coords.longitude;
+
+            findNearest();
+
+        },
+
+        ()=>{
+
+            alert("位置情報が取得できません");
+
+        }
+
+    );
+
+}
+
+
+// 最寄り避難所検索
+function findNearest(){
+
+    let nearest = null;
+    let min = 999999;
+
+    shelters.forEach(s=>{
+
+        let d = distance(
+            currentLat,
+            currentLng,
+            s.lat,
+            s.lng
+        );
+
+        s.distance = d;
+
+        if(d < min){
+
+            min = d;
+            nearest = s;
+
+        }
+
+    });
+
+    shelters.sort((a,b)=>a.distance-b.distance);
+
+    showNearest(nearest);
+
+    showTop5();
+
+    drawMap(nearest);
+
+}
+// 最寄り避難所表示
+function showNearest(s){
+
+    document.getElementById("nearestInfo").innerHTML = `
+
+    <h3>${s.name}</h3>
+
+    <p><b>住所</b><br>${s.address}</p>
+
+    <p><b>収容人数</b><br>${s.capacity} 人</p>
+
+    <p><b>距離</b><br>${s.distance.toFixed(2)} km</p>
+
+    <button onclick="
+    window.open(
+    'https://www.google.com/maps?q=${s.lat},${s.lng}',
+    '_blank'
+    )">
+
+    Googleマップで開く
+
+    </button>
+
+    `;
+
+}
+
+
+// TOP5表示
+function showTop5(){
+
+    let html="";
+
+    shelters.slice(0,5).forEach((s,i)=>{
+
+        html += `
+
+        <li>
+
+        <b>${i+1}位</b><br>
+
+        ${s.name}<br>
+
+        ${s.distance.toFixed(2)} km
+
+        </li>
+
+        `;
+
+    });
+
+    document.getElementById("top5").innerHTML=html;
+
+}
+
+
+// 地図描画
+function drawMap(nearest){
+
+    if(map){
+
+        map.remove();
+
+    }
+
+    map=L.map("map").setView(
+        [currentLat,currentLng],
+        15
+    );
+
+
+    L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:"© OpenStreetMap"
+        }
+    ).addTo(map);
+
+
+    // 現在地
+    currentMarker=L.circleMarker(
+
+        [currentLat,currentLng],
+
+        {
+
+            radius:8,
+
+            color:"blue",
+
+            fillColor:"blue",
+
+            fillOpacity:1
+
+        }
+
+    )
+    .addTo(map)
+    .bindPopup("現在地");
+
+
+    // 全避難所
+    shelterMarkers=[];
+
+    shelters.forEach(s=>{
+
+        let marker=L.marker(
+            [s.lat,s.lng]
+        )
+        .addTo(map)
+        .bindPopup(s.name);
+
+        shelterMarkers.push(marker);
+
+    });
+
+
+    // 最寄り避難所
+    nearestMarker=L.circleMarker(
+
+        [nearest.lat,nearest.lng],
+
+        {
+
+            radius:10,
+
+            color:"red",
+
+            fillColor:"red",
+
+            fillOpacity:1
+
+        }
+
+    )
+    .addTo(map)
+    .bindPopup(nearest.name);
+
+
+    // 線を引く
+    routeLine=L.polyline(
+
+        [
+
+            [currentLat,currentLng],
+
+            [nearest.lat,nearest.lng]
+
+        ],
+
+        {
+
+            color:"red",
+
+            weight:4
+
+        }
+
+    )
+    .addTo(map);
+
+
+    map.fitBounds(
+        routeLine.getBounds(),
+        {
+            padding:[50,50]
+        }
+    );
+
+}
+//========================
+// 検索機能
+//========================
+document.getElementById("searchBtn").addEventListener("click", searchShelter);
+
+document.getElementById("search").addEventListener("keyup", function(e){
+
+    if(e.key==="Enter"){
+
+        searchShelter();
+
+    }
+
+});
+
+function searchShelter(){
+
+    const keyword=document
+        .getElementById("search")
+        .value
+        .trim()
+        .toLowerCase();
+
+    if(keyword===""){
+
+        drawMap(shelters[0]);
+
+        return;
+
+    }
+
+    const result=shelters.filter(s=>
+
+        s.name.toLowerCase().includes(keyword) ||
+
+        s.address.toLowerCase().includes(keyword)
+
+    );
+
+    if(result.length===0){
+
+        alert("該当する避難所がありません");
+
+        return;
+
+    }
+
+    drawSearchResult(result);
+
+}
+
+
+
+//========================
+// 検索結果表示
+//========================
+function drawSearchResult(list){
+
+    if(map){
+
+        map.remove();
+
+    }
+
+    map=L.map("map").setView(
+        [list[0].lat,list[0].lng],
+        14
+    );
+
+    L.tileLayer(
+
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+        {
+
+            attribution:"© OpenStreetMap"
+
+        }
+
+    ).addTo(map);
+
+
+    list.forEach(s=>{
+
+        L.marker([s.lat,s.lng])
+
+        .addTo(map)
+
+        .bindPopup(
+
+            "<b>"+s.name+"</b><br>"+
+
+            s.address+
+
+            "<br><br>"+
+
+            "<button onclick=\"window.open('https://www.google.com/maps?q="+
+
+            s.lat+
+
+            ","+
+
+            s.lng+
+
+            "')\">Googleマップ</button>"
+
+        );
+
+    });
+
+}
+
+
+
+//========================
+// 現在地更新
+//========================
+document
+
+.getElementById("reloadBtn")
+
+.addEventListener("click",()=>{
+
+    getLocation();
+
+});
+
+
+
+//========================
+// マーカークリックで情報表示
+//========================
+function showInfo(s){
+
+document.getElementById("nearestInfo").innerHTML=`
+
+<h3>${s.name}</h3>
+
+<p><b>住所</b><br>${s.address}</p>
+
+<p><b>収容人数</b><br>${s.capacity} 人</p>
+
+<p><b>距離</b><br>${s.distance.toFixed(2)} km</p>
+
+<button onclick="window.open('https://www.google.com/maps?q=${s.lat},${s.lng}','_blank')">
+
+Googleマップで開く
+
+</button>
+
+`;
+
+}
+
+
+
+//========================
+// 地図クリック
+//========================
+function addMarkerEvents(){
+
+    shelterMarkers.forEach((marker,index)=>{
+
+        marker.on("click",()=>{
+
+            showInfo(shelters[index]);
+
+        });
+
+    });
+
+}
+
+
+
+//========================
+// 初期化
+//========================
+window.onload=()=>{
+
+    console.log("避難所検索システム起動");
+
+};
