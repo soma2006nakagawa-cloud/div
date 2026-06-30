@@ -17,9 +17,6 @@
     <a-box position="0 10 0" color="red" scale="5 5 5" animation="property:rotation; to:0 360 0; loop:true; dur:5000"></a-box>
   </a-entity>
 </a-scene>
-<script>
-const debug=document.getElementById("debug");
-navigator.geolocation.watchPosition(p=>{debug.textContent=`現在位置\n緯度:${p.coords.latitude.toFixed(8)}\n経度:${p.coords.longitude.toFixed(8)}\nGPS精度:${p.coords.accuracy.toFixed(1)} m`;},e=>{debug.textContent=e.message;},{enableHighAccuracy:true,maximumAge:0,timeout:10000});
-</script>
+
 </body>
 </html>
