@@ -4,94 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARモード</title>
-
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-
-<style>
-body{
-    margin:0;
-    overflow:hidden;
-}
-
-#back{
-    position:fixed;
-    top:10px;
-    right:10px;
-    z-index:9999;
-}
-
-#debug{
-    position:fixed;
-    top:10px;
-    left:10px;
-    background:rgba(0,0,0,.7);
-    color:#00ff00;
-    padding:10px;
-    z-index:9999;
-    white-space:pre-line;
-    font-size:14px;
-}
-
-button{
-    padding:10px 16px;
-    font-size:16px;
-}
-</style>
+<style>body{margin:0;overflow:hidden;font-family:sans-serif}#debug{position:fixed;top:10px;left:10px;background:rgba(0,0,0,.75);color:#00ff00;padding:10px;z-index:9999;white-space:pre-line;font-size:14px;border-radius:8px}#back{position:fixed;top:10px;right:10px;z-index:9999}#back button{padding:10px 16px;font-size:16px;border:none;border-radius:8px;background:#1976d2;color:white}</style>
 </head>
-
 <body>
-
 <div id="debug">GPS取得待機中...</div>
-
-<div id="back">
-    <button onclick="location.href='index.html'">戻る</button>
-</div>
-
-<a-scene
-    vr-mode-ui="enabled:false"
-    embedded
-    arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
-
-    <a-camera
-        gps-camera
-        rotation-reader
-        camera="far:10000; near:0.1">
-    </a-camera>
-
-    <a-box
-        gps-entity-place="latitude:37.9543091; longitude:139.3294243;"
-        position="0 5 0"
-        color="red"
-        width="2"
-        height="2"
-        depth="2"
-        animation="property:rotation; to:0 360 0; loop:true; dur:5000">
-    </a-box>
-
+<div id="back"><button onclick="location.href='index.html'">戻る</button></div>
+<a-scene vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
+  <a-camera gps-camera rotation-reader camera="far:10000; near:0.1"></a-camera>
+  <a-entity gps-entity-place="latitude:37.9543091; longitude:139.3294243;">
+    <a-box position="0 10 0" color="red" scale="5 5 5" animation="property:rotation; to:0 360 0; loop:true; dur:5000"></a-box>
+  </a-entity>
 </a-scene>
-
 <script>
-const debug = document.getElementById("debug");
-
-navigator.geolocation.watchPosition(
-    p => {
-        debug.textContent =
-`現在位置
-緯度:${p.coords.latitude.toFixed(8)}
-経度:${p.coords.longitude.toFixed(8)}
-GPS精度:${p.coords.accuracy.toFixed(1)} m`;
-    },
-    e => {
-        debug.textContent = e.message;
-    },
-    {
-        enableHighAccuracy:true,
-        maximumAge:0,
-        timeout:10000
-    }
-);
+const debug=document.getElementById("debug");
+navigator.geolocation.watchPosition(p=>{debug.textContent=`現在位置\n緯度:${p.coords.latitude.toFixed(8)}\n経度:${p.coords.longitude.toFixed(8)}\nGPS精度:${p.coords.accuracy.toFixed(1)} m`;},e=>{debug.textContent=e.message;},{enableHighAccuracy:true,maximumAge:0,timeout:10000});
 </script>
-
 </body>
 </html>
