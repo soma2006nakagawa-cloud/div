@@ -14,28 +14,6 @@
 </head>
 
 <body>
- <a-scene
-    vr-mode-ui="enabled: false"
-    embedded
-    arjs="sourceType: webcam; gpsMinDistance:5; gpsTimeInterval:1000;"
->
-
-    <!-- GPS対応カメラ（描画距離を10kmに設定） -->
-    <a-camera
-        gps-camera
-        rotation-reader
-        camera="far: 10000; near: 0.1">
-    </a-camera>
-
-    <!-- ここに51地点分の<a-box>が続きます -->
-    <!-- 新潟県新発田市中央町5-8-9 -->
-    <a-box
-        gps-entity-place="latitude:37.9543091; longitude:139.3294243;"
-        color="red"
-        width="2"
-        height="2"
-        depth="2">
-    </a-box>
 
 <header>
 
@@ -86,12 +64,5 @@ src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 <script src="script.js"></script>
 
 
-<script>
-  const d=document.getElementById('debug');
-  navigator.geolocation.watchPosition(p=>{d.textContent=`現在位置
-  緯度:${p.coords.latitude.toFixed(8)}
-  経度:${p.coords.longitude.toFixed(8)}
-  GPS精度:${p.coords.accuracy.toFixed(1)} m`;},
-  e=>d.textContent=e.message,{enableHighAccuracy:true,maximumAge:0,timeout:10000});
-  </script></body></html>
+</body></html>
 </html>
