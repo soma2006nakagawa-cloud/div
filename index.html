@@ -1,88 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <title>最寄り避難所検索</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最寄り避難所検索</title>
 
+<style>
+body{
+    font-family: sans-serif;
+    background:#eef5ff;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    color:#0b5ed7;
+}
+
+#result{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    background:#0b5ed7;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#084298;
+}
+</style>
+
+</head>
 <body>
 
-<h1>最寄り避難所</h1>
+<h1>最寄り避難所検索</h1>
 
 <div id="result">
-現在地を取得しています...
+位置情報を取得しています...
 </div>
 
 <script>
 
-// 2地点間の距離(km)
-function distance(lat1, lon1, lat2, lon2) {
+function distance(lat1,lon1,lat2,lon2){
 
-    const R = 6371;
+    const R=6371;
 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const dLat=(lat2-lat1)*Math.PI/180;
+    const dLon=(lon2-lon1)*Math.PI/180;
 
-    const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos(lat1 * Math.PI / 180) *
-        Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) ** 2;
+    const a=
+        Math.sin(dLat/2)**2+
+        Math.cos(lat1*Math.PI/180)*
+        Math.cos(lat2*Math.PI/180)*
+        Math.sin(dLon/2)**2;
 
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 
-
-// JSON読込
 fetch("data.json")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-    navigator.geolocation.getCurrentPosition(function(pos){
+navigator.geolocation.getCurrentPosition(pos=>{
 
-        const myLat = pos.coords.latitude;
-        const myLng = pos.coords.longitude;
+const myLat=pos.coords.latitude;
+const myLng=pos.coords.longitude;
 
-        let nearest = null;
-        let min = Infinity;
+let nearest=null;
+let min=999999;
 
-        data.shelters.forEach(function(shelter){
+data.shelters.forEach(shelter=>{
 
-            const d = distance(
-                myLat,
-                myLng,
-                shelter.lat,
-                shelter.lng
-            );
+const d=distance(
+myLat,
+myLng,
+shelter.lat,
+shelter.lng
+);
 
-            if(d < min){
-                min = d;
-                nearest = shelter;
-            }
+if(d<min){
+min=d;
+nearest=shelter;
+}
 
-        });
+});
 
-        document.getElementById("result").innerHTML = `
-            <h2>${nearest.name}</h2>
-            <p>住所：${nearest.address}</p>
-            <p>収容人数：${nearest.capacity}人</p>
-            <p>距離：約${min.toFixed(2)} km</p>
+document.getElementById("result").innerHTML=`
+<h2>${nearest.name}</h2>
 
-            <button onclick="window.open('https://www.google.com/maps?q=${nearest.lat},${nearest.lng}')">
-                Googleマップで開く
-            </button>
-        `;
+<p><b>住所</b><br>${nearest.address}</p>
 
-    },
-    function(){
-        document.getElementById("result").innerHTML =
-        "位置情報が取得できません。";
-    });
+<p><b>収容人数</b><br>${nearest.capacity} 人</p>
+
+<p><b>現在地からの距離</b><br>${min.toFixed(2)} km</p>
+
+<button onclick="window.open('https://www.google.com/maps?q=${nearest.lat},${nearest.lng}')">
+Googleマップで開く
+</button>
+`;
+
+},
+()=>{
+document.getElementById("result").innerHTML="位置情報が取得できません。";
+});
 
 })
-.catch(function(error){
-    console.log(error);
+.catch(err=>{
+document.getElementById("result").innerHTML="data.jsonの読込に失敗しました。";
+console.log(err);
 });
 
 </script>
