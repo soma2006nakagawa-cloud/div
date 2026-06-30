@@ -3,22 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>避難所検索システム</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<title>ARモード</title>
+
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+}
+
+#debug{
+  position:fixed;
+  top:10px;
+  left:10px;
+  background:rgba(0,0,0,.75);
+  color:#00ff00;
+  padding:10px;
+  z-index:9999;
+  white-space:pre-line;
+  font-size:14px;
+}
+
+#back{
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:9999;
+}
+
+button{
+  padding:10px 16px;
+  font-size:16px;
+}
+</style>
 </head>
+
 <body>
-<header>
-  <h1>避難所検索システム</h1>
-  <p>現在地から一番近い避難所を表示します</p>
-</header>
-<main class="container">
-  <section class="card menu-card"><a href="ar.html" class="button">📷 ARモードを開く</a></section>
-  <section id="nearestCard" class="card"><h2>最寄り避難所</h2><div id="nearestInfo">現在地を取得しています...</div></section>
-  <section class="card"><h2>近い避難所 TOP5</h2><ul id="top5"></ul></section>
-  <section class="card"><h2>地図</h2><div id="map"></div></section>
-</main>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+
+<div id="debug">GPS取得待機中...</div>
+
+<div id="back">
+  <button onclick="location.href='index.html'">戻る</button>
+</div>
+
+<a-scene
+  vr-mode-ui="enabled:false"
+  embedded
+  arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
+
+  <a-camera
+    gps-camera
+    rotation-reader
+    camera="far:10000; near:0.1">
+  </a-camera>
+
+</a-scene>
+
+<script>
+const debug = document.getElementById("debug");
+const scene = document.querySelector("a-scene");
+
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+  data.shelters.forEach(shelter => {
+
+    const entity = document.createElement("a-entity");
+
+    entity.setAttribute(
+      "gps-entity-place",
+      `latitude:${shelter.lat}; longitude:${shelter.lng};`
+    );
+
+    const box = document.createElement("a-box");
+
+    box.setAttribute("position", "0 10 0");
+    box.setAttribute("scale", "5 5 5");
+    box.setAttribute("color", "red");
+    box.setAttribute(
+      "animation",
+      "property:rotation; to:0 360 0; loop:true; dur:5000"
+    );
+
+    entity.appendChild(box);
+    scene.appendChild(entity);
+
+  });
+
+})
+.catch(error => {
+  debug.textContent = "data.jsonの読み込み失敗";
+  console.log(error);
+});
+
+navigator.geolocation.watchPosition(
+  p => {
+    debug.textContent =
+`現在位置
+緯度:${p.coords.latitude.toFixed(8)}
+経度:${p.coords.longitude.toFixed(8)}
+GPS精度:${p.coords.accuracy.toFixed(1)} m`;
+  },
+  e => {
+    debug.textContent = e.message;
+  },
+  {
+    enableHighAccuracy:true,
+    maximumAge:0,
+    timeout:10000
+  }
+);
+</script>
+
 </body>
 </html>
