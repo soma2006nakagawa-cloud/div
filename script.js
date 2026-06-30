@@ -43,7 +43,48 @@ fetch("data.json")
     alert("data.jsonが読み込めません");
 
 });
+//AR
+const arBtn = document.getElementById("arBtn");
+const arContainer = document.getElementById("arContainer");
 
+arBtn.onclick = () => {
+
+    if(arContainer.style.display === "none"){
+
+        arContainer.style.display = "block";
+
+    }else{
+
+        arContainer.style.display = "none";
+
+    }
+
+};
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+    const scene = document.querySelector("a-scene");
+
+    data.spots.forEach(spot => {
+
+        const box = document.createElement("a-box");
+
+        box.setAttribute(
+            "gps-entity-place",
+            `latitude:${spot.lat}; longitude:${spot.lng};`
+        );
+
+        box.setAttribute("color","red");
+        box.setAttribute("width","2");
+        box.setAttribute("height","2");
+        box.setAttribute("depth","2");
+
+        scene.appendChild(box);
+
+    });
+
+});
 
 // 現在地取得
 function getLocation(){
