@@ -1,96 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>避難所検索システム</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>避難所検索システム</title>
 
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
-    <style>
-        body { margin: 0; overflow: hidden; }
-        /* iPhone対策のカメラ全画面表示用お守り */
-        .a-canvas { display: block !important; }
-    </style>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
-    <a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;">
-
-        <a-box
-            gps-entity-place="latitude: 37.9543091; longitude: 139.3294243;"
-            position="0 5 0"
-            scale="3 3 3"
-            color="red"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-        </a-box>
-
-        <a-camera gps-camera rotation-reader></a-camera>
-
-    </a-scene>
 
 <header>
-
-<h1>避難所検索システム</h1>
-
+    <h1>避難所検索システム</h1>
 </header>
 
 <div class="container">
 
+    <div class="card">
+        <a href="ar.html">
+            <button>📷 ARモード</button>
+        </a>
+    </div>
 
+    <div id="nearestCard" class="card">
+        <h2>最寄り避難所</h2>
+        <div id="nearestInfo">現在地を取得しています...</div>
+    </div>
 
+    <div class="card">
+        <h2>近い避難所 TOP5</h2>
+        <ul id="top5"></ul>
+    </div>
 
-<div id="nearestCard" class="card">
-
-<h2>最寄り避難所</h2>
-
-<div id="nearestInfo">
-
-現在地を取得しています...
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-<a href="ar.html">
-    <button>📷 ARモード</button>
-</a>
-<h2>近い避難所 TOP5</h2>
-
-<ul id="top5">
-
-</ul>
+    <div class="card">
+        <h2>地図</h2>
+        <div id="map"></div>
+    </div>
 
 </div>
 
-
-<div class="card">
-
-<h2>地図</h2>
-
-<div id="map"></div>
-
-</div>
-
-</div>
-
-<script
-src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 
-
-<script src="script.js"></script>
 </body>
-
 </html>
