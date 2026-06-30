@@ -6,4 +6,38 @@ function getLocation(){if(!navigator.geolocation){nearestInfo.innerHTML='<p clas
 function findNearest(){shelters.forEach(s=>{s.distance=distance(currentLat,currentLng,Number(s.lat),Number(s.lng));});shelters.sort((a,b)=>a.distance-b.distance);const nearest=shelters[0];showNearest(nearest);showTop5();drawMap(nearest);}
 function showNearest(s){nearestInfo.innerHTML=`<h3>${s.name}</h3><p><b>住所</b><br>${s.address||"住所不明"}</p><p><b>収容人数</b><br>${s.capacity??"不明"} 人</p><p><b>現在地からの距離</b><br>${s.distance.toFixed(2)} km</p><button onclick="window.open('https://www.google.com/maps?q=${s.lat},${s.lng}','_blank')">Googleマップで開く</button>`;}
 function showTop5(){top5.innerHTML=shelters.slice(0,5).map((s,i)=>`<li><b>${i+1}位：${s.name}</b><br>${s.address||""}<br>${s.distance.toFixed(2)} km</li>`).join("");}
-function drawMap(nearest){if(!map){map=L.map("map");L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"OpenStreetMap"}).addTo(map);}allMarkers.forEach(m=>map.removeLayer(m));allMarkers=[];if(currentMarker)map.removeLayer(currentMarker);if(nearestMarker)map.removeLayer(nearestMarker);if(routeLine)map.removeLayer(routeLine);shelters.forEach(s=>{const marker=L.marker([s.lat,s.lng]).addTo(map).bindPopup(`<b>${s.name}</b><br>${s.address||""}<br>${s.distance.toFixed(2)} km`);allMarkers.push(marker);});currentMarker=L.circleMarker([currentLat,currentLng],{radius:8,color:"blue",fillColor:"blue",fillOpacity:1}).addTo(map).bindPopup("現在地");nearestMarker=L.circleMarker([nearest.lat,nearest.lng],{radius:10,color:"red",fillColor:"red",fillOpacity:1}).addTo(map).bindPopup(`最寄り避難所<br>${nearest.name}`);routeLine=L.polyline([[currentLat,currentLng],[nearest.lat,nearest.lng]],{color:"red",weight:4}).addTo(map);map.fitBounds(routeLine.getBounds(),{padding:[50,50]});}
+function drawMap(nearest){if(!map){map=L.map("map");L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"OpenStreetMap"}).addTo(map);}allMarkers.forEach(m=>map.removeLayer(m));allMarkers=[];if(currentMarker)map.removeLayer(currentMarker);if(nearestMarker)map.removeLayer(nearestMarker);if(routeLine)map.removeLayer(routeLine);shelters.forEach(s=>{const marker=L.marker([s.lat,s.lng]).addTo(map).bindPopup(`<b>${s.name}</b><br>${s.address||""}<br>${s.distance.toFixed(2)} km`);allMarkers.push(marker);});currentMarker=L.circleMarker([currentLat,currentLng],{radius:8,color:"blue",fillColor:"blue",fillOpacity:1}).addTo(map).bindPopup("現在地");
+                          nearestMarker=L.circleMarker([nearest.lat,nearest.lng],{radius:10,color:"red",fillColor:"red",fillOpacity:1}).addTo(map).bindPopup(`最寄り避難所<br>${nearest.name}`);routeLine=L.polyline([[currentLat,currentLng],[nearest.lat,nearest.lng]],{color:"red",weight:4}).addTo(map);map.fitBounds(routeLine.getBounds(),{padding:[50,50]});}
+
+const scene = document.querySelector("a-scene");
+
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+    // 観光地なら data.spots、避難所なら data.shelters
+    data.shelters.forEach(place => {
+
+        const entity = document.createElement("a-entity");
+
+        entity.setAttribute(
+            "gps-entity-place",
+            `latitude:${place.lat}; longitude:${place.lng};`
+        );
+
+        const box = document.createElement("a-box");
+
+        box.setAttribute("position", "0 10 0");   // 10m浮かせる
+        box.setAttribute("scale", "5 5 5");
+        box.setAttribute("color", "red");
+        box.setAttribute(
+            "animation",
+            "property:rotation; to:0 360 0; loop:true; dur:5000"
+        );
+
+        entity.appendChild(box);
+        scene.appendChild(entity);
+
+    });
+
+});
