@@ -43,6 +43,12 @@ body {
     background: #1976d2;
     color: white;
 }
+
+video {
+    object-fit: cover !important;
+    width: 100vw !important;
+    height: 100vh !important;
+}
 </style>
 </head>
 
@@ -57,8 +63,14 @@ body {
 <a-scene
     vr-mode-ui="enabled: false"
     embedded
-    arjs="sourceType: webcam; gpsMinDistance:5; gpsTimeInterval:1000;">
-
+    renderer="antialias: true; alpha: true"
+    arjs="sourceType: webcam;
+          sourceWidth: 1280;
+          sourceHeight: 720;
+          displayWidth: 1280;
+          displayHeight: 720;
+          gpsMinDistance:5;
+          gpsTimeInterval:1000;">
     <a-camera
         gps-camera
         rotation-reader
