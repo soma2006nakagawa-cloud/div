@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>避難所検索</title>
+<link rel="stylesheet" href="evacuation.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+<header class="evac-header">
+<a href="index.html" class="back">← ホーム</a>
+<h1>避難所検索</h1>
+<p>現在地から一番近い避難所を表示します</p>
+</header>
+<main class="container">
+<section class="card"><h2>最寄り避難所</h2><div id="nearestInfo">現在地を取得しています...</div></section>
+<section class="card"><h2>近い避難所 TOP5</h2><ul id="top5"></ul></section>
+<section class="card"><h2>地図</h2><div id="map"></div></section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="evacuation.js"></script>
+</body>
+</html>
