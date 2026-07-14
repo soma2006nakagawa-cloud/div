@@ -49,7 +49,29 @@ html, body {
   font-weight: bold;
 }
 
-/* VRボタンのみ非表示。video/canvasには触れない */
+
+/* Androidでカメラが過度に拡大されるのを防ぐ */
+video {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: contain !important;
+  background: #000 !important;
+}
+
+canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* VRボタンのみ非表示 */
 .a-enter-vr,
 .a-enter-ar {
   display: none !important;
@@ -68,7 +90,7 @@ html, body {
 <a-scene
   vr-mode-ui="enabled: false"
   embedded
-  arjs="sourceType: webcam; gpsMinDistance:5; gpsTimeInterval:1000; debugUIEnabled:false;">
+  arjs="sourceType:webcam; sourceWidth:720; sourceHeight:1280; displayWidth:720; displayHeight:1280; gpsMinDistance:5; gpsTimeInterval:1000; debugUIEnabled:false;">
 
   <a-camera
     gps-camera
