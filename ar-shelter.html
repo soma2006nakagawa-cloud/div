@@ -2,74 +2,85 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>避難所AR</title>
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
 <style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:sans-serif;
-  background:#000;
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: sans-serif;
 }
 
-#debug{
-  position:fixed;
-  top:10px;
-  left:10px;
-  max-width:58vw;
-  background:rgba(0,0,0,.72);
-  color:#00ff66;
-  padding:9px 10px;
-  z-index:9999;
-  white-space:pre-line;
-  font-size:12px;
-  line-height:1.45;
-  border-radius:8px;
+#debug {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  max-width: 60vw;
+  background: rgba(0,0,0,.68);
+  color: #00ff66;
+  padding: 9px 10px;
+  z-index: 9999;
+  white-space: pre-line;
+  font-size: 12px;
+  line-height: 1.45;
+  border-radius: 8px;
 }
 
-#back{
-  position:fixed;
-  top:10px;
-  right:10px;
-  z-index:9999;
+#back {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
 }
 
-#back button{
-  padding:9px 12px;
-  border:0;
-  border-radius:8px;
-  background:#e6424a;
-  color:#fff;
-  font-size:14px;
-  font-weight:bold;
+#back button {
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #e6424a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-video,
-canvas{
-  position:fixed !important;
-  top:0 !important;
-  left:-1vw !important;
-  width:102vw !important;
-  height:100vh !important;
-  object-fit:cover !important;
+/* Androidのカメラ映像を画面いっぱいに表示 */
+video {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  z-index: -2 !important;
+  background: transparent !important;
+}
+
+/* A-Frameの描画面は透明のままカメラ映像の上に重ねる */
+canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -1 !important;
+  background: transparent !important;
 }
 
 .a-enter-vr,
-.a-enter-ar{
-  display:none !important;
+.a-enter-ar {
+  display: none !important;
 }
 </style>
 </head>
 
 <body>
 
-<div id="debug">GPS取得待機中...</div>
+<div id="debug">カメラ・GPS取得待機中...</div>
 
 <div id="back">
   <button onclick="location.href='evacuation.html'">← 避難所へ戻る</button>
@@ -78,15 +89,8 @@ canvas{
 <a-scene
   vr-mode-ui="enabled:false"
   embedded
-  renderer="antialias:true; alpha:true; precision:mediump"
-  arjs="sourceType:webcam;
-        sourceWidth:1280;
-        sourceHeight:720;
-        displayWidth:1280;
-        displayHeight:720;
-        gpsMinDistance:5;
-        gpsTimeInterval:1000;
-        debugUIEnabled:false;">
+  renderer="antialias:true; alpha:true; logarithmicDepthBuffer:true"
+  arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000; debugUIEnabled:false;">
 
   <a-camera
     gps-camera
@@ -103,8 +107,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -116,8 +120,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -129,8 +133,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -142,8 +146,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -155,8 +159,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -168,8 +172,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -181,8 +185,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -194,8 +198,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -207,8 +211,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -220,8 +224,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -233,8 +237,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -246,8 +250,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -259,8 +263,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -272,8 +276,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -285,8 +289,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -298,8 +302,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -311,8 +315,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -324,8 +328,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -337,8 +341,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -350,8 +354,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -363,8 +367,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -376,8 +380,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -389,8 +393,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -402,8 +406,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -415,8 +419,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -428,8 +432,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -441,8 +445,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -454,8 +458,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -467,8 +471,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -480,8 +484,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -493,8 +497,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -506,8 +510,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -519,8 +523,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -532,8 +536,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -545,8 +549,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -558,8 +562,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -571,8 +575,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -584,8 +588,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -597,8 +601,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -610,8 +614,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -623,8 +627,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -636,8 +640,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -649,8 +653,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -662,8 +666,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -675,8 +679,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -688,8 +692,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -701,8 +705,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -714,8 +718,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -727,8 +731,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -740,8 +744,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -753,8 +757,8 @@ canvas{
         height="2"
         depth="2"
         color="#e53935"
-        material="opacity:0.88; transparent:true"
-        animation="property:rotation;to:0 360 0;loop:true;dur:6000">
+        material="opacity:0.9; transparent:true"
+        animation="property:rotation; to:0 360 0; loop:true; dur:6000">
       </a-box>
     </a-entity>
 
@@ -763,6 +767,26 @@ canvas{
 
 <script>
 const debug = document.getElementById("debug");
+
+async function checkCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } },
+      audio: false
+    });
+
+    stream.getTracks().forEach(track => track.stop());
+
+    debug.textContent = "カメラ許可OK\nGPS取得待機中...";
+  } catch (error) {
+    debug.textContent =
+      "カメラを使用できません。\n" +
+      "ブラウザのサイト設定でカメラを許可してください。\n" +
+      error.message;
+  }
+}
+
+checkCamera();
 
 navigator.geolocation.watchPosition(
   p => {
@@ -777,9 +801,9 @@ GPS精度:${p.coords.accuracy.toFixed(1)} m
     debug.textContent = "位置情報エラー: " + e.message;
   },
   {
-    enableHighAccuracy:true,
-    maximumAge:0,
-    timeout:15000
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 15000
   }
 );
 </script>
