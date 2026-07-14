@@ -1,1 +1,1 @@
-index.html=ホーム、evacuation.html=避難所、ar-shelter.html=避難所AR、ar-tourism.html=観光AR
+このZIPを解凍してGitHub Pagesにアップロードしてください。index.htmlがホーム、evacuation.htmlが避難所、ar.htmlがARです。
