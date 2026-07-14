@@ -1,1 +1,0 @@
-このZIPを解凍してGitHub Pagesにアップロードしてください。index.htmlがホーム、evacuation.htmlが避難所、ar.htmlがARです。
