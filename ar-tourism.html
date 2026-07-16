@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>新発田 観光AR</title>
+
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+<style>
+html,body {
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:"Yu Gothic",system-ui,sans-serif;
+}
+
+#top-bar {
+  position:fixed;
+  top:calc(10px + env(safe-area-inset-top));
+  left:10px;
+  right:10px;
+  z-index:9999;
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+}
+
+#status {
+  flex:1;
+  min-width:0;
+  padding:9px 10px;
+  border-radius:12px;
+  background:rgba(0,0,0,.68);
+  color:#58ff8a;
+  white-space:pre-line;
+  font-size:12px;
+  line-height:1.45;
+  backdrop-filter:blur(6px);
+}
+
+.back-button {
+  min-height:44px;
+  padding:10px 13px;
+  border:0;
+  border-radius:12px;
+  background:#2586d8;
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+
+#guide {
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:calc(14px + env(safe-area-inset-bottom));
+  z-index:9999;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.88);
+  color:#263238;
+  font-size:12px;
+  line-height:1.45;
+  text-align:center;
+  backdrop-filter:blur(8px);
+}
+
+.a-enter-vr,
+.a-enter-ar {
+  display:none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top-bar">
+  <div id="status">カメラ・GPS取得待機中...</div>
+  <button class="back-button" onclick="location.href='index.html'">← ホーム</button>
+</div>
+
+<div id="guide">
+  スマホをゆっくり左右に向けてください。モデルは登録地点の方向に表示されます。
+</div>
+
+<a-scene
+  vr-mode-ui="enabled:false"
+  embedded
+  renderer="antialias:true; alpha:true"
+  arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000; debugUIEnabled:false;">
+
+  <a-assets timeout="60000">
+    <a-asset-item id="model-station" src="models/shibata_station_ar_painted.glb"></a-asset-item>
+    <a-asset-item id="model-castle" src="models/shibata_jyo.glb"></a-asset-item>
+    <a-asset-item id="model-zoushunkaku" src="models/Zousyunkaku.glb"></a-asset-item>
+    <a-asset-item id="model-sl" src="models/SL.glb"></a-asset-item>
+    <a-asset-item id="model-oumon" src="models/Oumon.glb"></a-asset-item>
+    <a-asset-item id="model-funaguchi" src="models/Funaguchi.glb"></a-asset-item>
+    <a-asset-item id="model-menchi" src="models/Menchikatsu.glb"></a-asset-item>
+  </a-assets>
+
+  <a-camera
+    gps-camera
+    rotation-reader
+    camera="far:10000; near:0.1">
+  </a-camera>
+
+
+    <!-- 新発田駅 -->
+    <a-entity
+      gps-entity-place="latitude:37.947; longitude:139.3276;"
+      data-name="新発田駅">
+      <a-entity
+        gltf-model="#model-station"
+        position="0 1.5 0"
+        scale="0.082 0.082 0.082"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- 新発田城 -->
+    <a-entity
+      gps-entity-place="latitude:37.955467; longitude:139.325399;"
+      data-name="新発田城">
+      <a-entity
+        gltf-model="#model-castle"
+        position="0 1.0 0"
+        scale="0.24 0.24 0.24"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- 蔵春閣 -->
+    <a-entity
+      gps-entity-place="latitude:37.943983; longitude:139.33174;"
+      data-name="蔵春閣">
+      <a-entity
+        gltf-model="#model-zoushunkaku"
+        position="0 1.0 0"
+        scale="0.17 0.17 0.17"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- 新発田東公園 SL -->
+    <a-entity
+      gps-entity-place="latitude:37.94445; longitude:139.33315;"
+      data-name="新発田東公園 SL">
+      <a-entity
+        gltf-model="#model-sl"
+        position="0 1.0 0"
+        scale="0.22 0.22 0.22"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- 王紋 -->
+    <a-entity
+      gps-entity-place="latitude:37.944107; longitude:139.330801;"
+      data-name="王紋">
+      <a-entity
+        gltf-model="#model-oumon"
+        position="0 2.0 0"
+        scale="2.1 2.1 2.1"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- 菊水ふなぐち -->
+    <a-entity
+      gps-entity-place="latitude:37.99005; longitude:139.36704;"
+      data-name="菊水ふなぐち">
+      <a-entity
+        gltf-model="#model-funaguchi"
+        position="0 2.0 0"
+        scale="5 5 5"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+    <!-- いじみのメンチ -->
+    <a-entity
+      gps-entity-place="latitude:37.92839; longitude:139.35114;"
+      data-name="いじみのメンチ">
+      <a-entity
+        gltf-model="#model-menchi"
+        position="0 2.0 0"
+        scale="1.8 1.8 1.8"
+        animation="property:rotation; to:0 360 0; loop:true; dur:18000">
+      </a-entity>
+    </a-entity>
+
+</a-scene>
+
+<script>
+const statusBox = document.getElementById("status");
+
+navigator.geolocation.watchPosition(
+  p => {
+    statusBox.textContent =
+`観光AR地点数: 7件
+緯度: ${p.coords.latitude.toFixed(7)}
+経度: ${p.coords.longitude.toFixed(7)}
+GPS精度: ${p.coords.accuracy.toFixed(1)} m`;
+  },
+  e => {
+    statusBox.textContent = "位置情報エラー: " + e.message;
+  },
+  {
+    enableHighAccuracy:true,
+    maximumAge:0,
+    timeout:15000
+  }
+);
+
+document.querySelector("a-scene").addEventListener("loaded", () => {
+  console.log("観光ARシーンを読み込みました。");
+});
+</script>
+
+</body>
+</html>

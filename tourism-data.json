@@ -1,0 +1,79 @@
+{
+  "spots": [
+    {
+      "id": "station",
+      "name": "新発田駅",
+      "lat": 37.947,
+      "lng": 139.3276,
+      "model": "shibata_station_ar_painted.glb",
+      "scale": "0.082 0.082 0.082",
+      "height": 1.5,
+      "note": "座標は初期値。現地で微調整してください。"
+    },
+    {
+      "id": "castle",
+      "name": "新発田城",
+      "lat": 37.955467,
+      "lng": 139.325399,
+      "model": "shibata_jyo.glb",
+      "scale": "0.24 0.24 0.24",
+      "height": 1.0,
+      "note": "新発田城付近"
+    },
+    {
+      "id": "zoushunkaku",
+      "name": "蔵春閣",
+      "lat": 37.943983,
+      "lng": 139.33174,
+      "model": "Zousyunkaku.glb",
+      "scale": "0.17 0.17 0.17",
+      "height": 1.0,
+      "note": "蔵春閣付近"
+    },
+    {
+      "id": "sl",
+      "name": "新発田東公園 SL",
+      "lat": 37.94445,
+      "lng": 139.33315,
+      "model": "SL.glb",
+      "scale": "0.22 0.22 0.22",
+      "height": 1.0,
+      "note": "初期値。SL展示位置に合わせて微調整してください。"
+    },
+    {
+      "id": "oumon",
+      "name": "王紋",
+      "lat": 37.944107,
+      "lng": 139.330801,
+      "model": "Oumon.glb",
+      "scale": "2.1 2.1 2.1",
+      "height": 2.0,
+      "note": "王紋酒造付近"
+    },
+    {
+      "id": "funaguchi",
+      "name": "菊水ふなぐち",
+      "lat": 37.99005,
+      "lng": 139.36704,
+      "model": "Funaguchi.glb",
+      "scale": "5 5 5",
+      "height": 2.0,
+      "note": "仮座標です。展示したい場所へ変更してください。"
+    },
+    {
+      "id": "menchi",
+      "name": "いじみのメンチ",
+      "lat": 37.92839,
+      "lng": 139.35114,
+      "model": "Menchikatsu.glb",
+      "scale": "1.8 1.8 1.8",
+      "height": 2.0,
+      "note": "五十公野周辺の初期値です。販売場所へ変更してください。"
+    }
+  ],
+  "instructions": {
+    "lat_lng": "現地で表示位置を確認し、必要なら緯度・経度を微調整してください。",
+    "scale": "モデルが大きすぎる／小さすぎる場合はscaleを変更してください。",
+    "warning": "Funaguchi.glbは約105MBあるため、スマホで読み込みに時間がかかる可能性があります。"
+  }
+}
