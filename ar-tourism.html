@@ -2,8 +2,10 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>AR表示テスト</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,
+                 minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>新発田 観光AR</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
@@ -14,33 +16,86 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background: #000;
+      touch-action: none;
+      font-family: system-ui, -apple-system, "Yu Gothic", sans-serif;
     }
 
-    #debug {
+    /*
+      Androidでカメラが拡大・切り抜き表示されるのを防止。
+      coverではなくcontainで、カメラ映像全体を表示する。
+    */
+    video,
+    #arjs-video {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      transform: none !important;
+      margin: 0 !important;
+    }
+
+    .a-canvas {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+
+    #status {
       position: fixed;
-      top: 10px;
+      top: max(10px, env(safe-area-inset-top));
       left: 10px;
       right: 10px;
-      z-index: 9999;
-      padding: 10px;
-      border-radius: 8px;
+      z-index: 10000;
+      padding: 10px 12px;
+      border-radius: 10px;
       background: rgba(0, 0, 0, 0.72);
-      color: #00ff66;
+      color: #7cff9c;
       font-size: 13px;
+      line-height: 1.45;
       white-space: pre-line;
       pointer-events: none;
+    }
+
+    #nearest {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 10000;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #111;
+      font-size: 14px;
+      line-height: 1.45;
+      pointer-events: none;
+    }
+
+    #nearest strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 16px;
     }
   </style>
 </head>
 
 <body>
-  <div id="debug">GPS取得待機中...</div>
+  <div id="status">カメラ・GPS取得待機中...</div>
+  <div id="nearest">
+    <strong>最寄りスポットを検索中</strong>
+    位置情報を許可してください。
+  </div>
 
   <a-scene
-    id="scene"
+    id="arScene"
     vr-mode-ui="enabled: false"
     embedded
-    renderer="antialias: true; alpha: true"
+    renderer="antialias: true; alpha: true; logarithmicDepthBuffer: true"
     arjs="sourceType: webcam; gpsMinDistance: 0; gpsTimeInterval: 1000; debugUIEnabled: false;">
 
     <a-camera
@@ -51,56 +106,230 @@
   </a-scene>
 
   <script>
-    const debug = document.getElementById("debug");
-    const scene = document.getElementById("scene");
+    const statusBox = document.getElementById("status");
+    const nearestBox = document.getElementById("nearest");
+    const scene = document.getElementById("arScene");
 
-    let modelAdded = false;
+    /*
+      GLBはこのHTMLと同じフォルダへ置いてください。
+      ファイル名が違う場合は、下の model を実際の名前に変更します。
+    */
+    const spots = [
+      {
+        name: "新発田城跡",
+        lat: 37.93963891,
+        lng: 139.326001834219947,
+        model: "sibatazyouato.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "清水園",
+        lat: 37.943791,
+        lng: 139.328785,
+        model: "kiyomizuen.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "蔵春閣",
+        lat: 37.94389807273562,
+        lng: 139.3317142467578,
+        model: "zousyunkan.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "東公園のSL",
+        lat: 37.94367248807764,
+        lng: 139.3323475293261,
+        model: "SL.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "諏訪神社",
+        lat: 37.944214,
+        lng: 139.332004,
+        model: "uwazinnzya.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "新発田市役所",
+        lat: 37.947839,
+        lng: 139.327160,
+        model: "siyakusyo.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "王紋酒造",
+        lat: 37.94436989072327,
+        lng: 139.33066511399528,
+        model: "oumon.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "五十公野公園",
+        lat: 37.9321,
+        lng: 139.3522,
+        model: "ikarashino_donguri_athletic.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "新発田駅",
+        lat: 37.9447,
+        lng: 139.3352,
+        model: "shibata_station_ar_painted.glb",
+        scale: "2 2 2"
+      },
+      {
+        name: "菊水ふなぐち",
+        lat: 37.9520,
+        lng: 139.3260,
+        model: "funaguchi.glb",
+        scale: "2 2 2"
+      }
+    ];
 
-    function addModel(latitude, longitude) {
-      if (modelAdded) return;
-      modelAdded = true;
+    const createdModels = new Map();
+    let lastPosition = null;
+    let firstGpsFix = false;
 
-      // 現在地から約8m北側へ表示
-      const modelLatitude = latitude + 0.000072;
-      const modelLongitude = longitude;
+    function toRad(value) {
+      return value * Math.PI / 180;
+    }
 
-      const model = document.createElement("a-entity");
-      model.setAttribute(
+    function distanceMeters(lat1, lng1, lat2, lng2) {
+      const R = 6371000;
+      const dLat = toRad(lat2 - lat1);
+      const dLng = toRad(lng2 - lng1);
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) ** 2;
+
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function formatDistance(meters) {
+      if (meters < 1000) {
+        return `${Math.round(meters)} m`;
+      }
+      return `${(meters / 1000).toFixed(2)} km`;
+    }
+
+    function forceCameraFit() {
+      const video = document.querySelector("video");
+      if (!video) return;
+
+      video.style.setProperty("width", "100vw", "important");
+      video.style.setProperty("height", "100vh", "important");
+      video.style.setProperty("object-fit", "contain", "important");
+      video.style.setProperty("transform", "none", "important");
+      video.style.setProperty("margin", "0", "important");
+    }
+
+    const observer = new MutationObserver(forceCameraFit);
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    });
+
+    window.addEventListener("resize", forceCameraFit);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(forceCameraFit, 300);
+    });
+    setInterval(forceCameraFit, 1000);
+
+    function createSpotModel(spot) {
+      if (createdModels.has(spot.name)) return;
+
+      const entity = document.createElement("a-entity");
+      entity.setAttribute(
         "gps-entity-place",
-        `latitude: ${modelLatitude}; longitude: ${modelLongitude};`
+        `latitude: ${spot.lat}; longitude: ${spot.lng};`
       );
-      model.setAttribute("gltf-model", "SL.glb");
-      model.setAttribute("scale", "1 1 1");
-      model.setAttribute("rotation", "0 180 0");
+      entity.setAttribute("gltf-model", spot.model);
+      entity.setAttribute("scale", spot.scale);
+      entity.setAttribute("rotation", "0 180 0");
 
-      model.addEventListener("model-loaded", () => {
-        debug.textContent += "\nSL.glb 読み込み成功\n約8m北側を向いてください";
+      entity.addEventListener("model-loaded", () => {
+        console.log(`${spot.name}: ${spot.model} 読み込み成功`);
       });
 
-      model.addEventListener("model-error", (event) => {
-        debug.textContent += "\nSL.glb 読み込み失敗\nHTMLと同じ場所にSL.glbを置いてください";
-        console.error("model-error", event.detail);
+      entity.addEventListener("model-error", event => {
+        console.error(`${spot.name}: ${spot.model} 読み込み失敗`, event.detail);
       });
 
-      scene.appendChild(model);
+      scene.appendChild(entity);
+      createdModels.set(spot.name, entity);
+    }
+
+    function updateNearbyModels(latitude, longitude) {
+      /*
+        端末負荷を抑えるため、現在地から2km以内のモデルだけ作成。
+        起動前にモデルを作らないため、最初の巨大表示も防止する。
+      */
+      const LOAD_RADIUS = 2000;
+
+      spots.forEach(spot => {
+        const distance = distanceMeters(
+          latitude,
+          longitude,
+          spot.lat,
+          spot.lng
+        );
+
+        if (distance <= LOAD_RADIUS) {
+          createSpotModel(spot);
+        }
+      });
+    }
+
+    function updateNearest(latitude, longitude) {
+      const sorted = spots
+        .map(spot => ({
+          ...spot,
+          distance: distanceMeters(latitude, longitude, spot.lat, spot.lng)
+        }))
+        .sort((a, b) => a.distance - b.distance);
+
+      const nearest = sorted[0];
+
+      nearestBox.innerHTML =
+        `<strong>最寄り：${nearest.name}</strong>` +
+        `距離：${formatDistance(nearest.distance)}<br>` +
+        `現地の方向へカメラを向けてください。`;
     }
 
     navigator.geolocation.watchPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+      position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
         const accuracy = position.coords.accuracy;
 
-        debug.textContent =
-`現在位置
-緯度: ${lat.toFixed(8)}
-経度: ${lng.toFixed(8)}
-GPS精度: ${accuracy.toFixed(1)} m`;
+        lastPosition = { latitude, longitude };
 
-        addModel(lat, lng);
+        statusBox.textContent =
+`GPS取得成功
+緯度：${latitude.toFixed(8)}
+経度：${longitude.toFixed(8)}
+精度：${accuracy.toFixed(1)} m
+読込済みモデル：${createdModels.size}件`;
+
+        updateNearest(latitude, longitude);
+        updateNearbyModels(latitude, longitude);
+
+        if (!firstGpsFix) {
+          firstGpsFix = true;
+          setTimeout(forceCameraFit, 500);
+          setTimeout(forceCameraFit, 1500);
+        }
       },
-      (error) => {
-        debug.textContent = `位置情報エラー: ${error.message}`;
+      error => {
+        statusBox.textContent =
+`位置情報エラー
+${error.message}
+
+ブラウザの位置情報を許可してください。`;
       },
       {
         enableHighAccuracy: true,
@@ -108,6 +337,12 @@ GPS精度: ${accuracy.toFixed(1)} m`;
         timeout: 15000
       }
     );
+
+    window.addEventListener("load", () => {
+      setTimeout(forceCameraFit, 500);
+      setTimeout(forceCameraFit, 1500);
+      setTimeout(forceCameraFit, 3000);
+    });
   </script>
 </body>
 </html>
