@@ -2,12 +2,13 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>観光ARテスト</title>
+  <title>観光AR</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
@@ -26,20 +27,25 @@
       top: 10px;
       left: 10px;
       z-index: 9999;
+
       padding: 10px;
+      border-radius: 8px;
+
       background: rgba(0, 0, 0, 0.75);
       color: #00ff00;
-      white-space: pre-line;
+
       font-size: 13px;
+      white-space: pre-line;
     }
   </style>
 </head>
 
 <body>
 
-  <div id="debug">GPS・モデル取得待機中...</div>
+  <div id="debug">GPS取得待機中...</div>
 
   <a-scene
+    id="ar-scene"
     vr-mode-ui="enabled: false"
     embedded
     arjs="
@@ -57,61 +63,70 @@
     >
     </a-camera>
 
-    <!-- SL.glbをHTMLと同じ場所から読み込む -->
-    <a-entity
-  id="sl-model"
-  gps-entity-place="
-    latitude: 37.94367248807764;
-    longitude: 139.3323475293261;
-  "
-  gltf-model="SL.glb"
-  scale="2 2 2"
-  visible="false">
-</a-entity>
-
   </a-scene>
 
- <script>
-  const debug = document.getElementById("debug");
-  const model = document.getElementById("sl-model");
+  <script>
+    const debug = document.getElementById("debug");
+    const scene = document.getElementById("ar-scene");
 
-  let gpsReady = false;
-  let modelReady = false;
+    let modelCreated = false;
 
-  function showModel() {
-    if (gpsReady && modelReady) {
-      setTimeout(() => {
-        model.setAttribute("visible", true);
-      }, 1500);
+    function createModel() {
+      if (modelCreated) {
+        return;
+      }
+
+      modelCreated = true;
+
+      const model = document.createElement("a-entity");
+
+      model.setAttribute(
+        "gps-entity-place",
+        "latitude:37.94367248807764; longitude:139.3323475293261;"
+      );
+
+      model.setAttribute("gltf-model", "SL.glb");
+      model.setAttribute("scale", "2 2 2");
+      model.setAttribute("position", "0 0 0");
+
+      model.addEventListener("model-loaded", () => {
+        debug.textContent += "\nSL.glb 読み込み成功";
+      });
+
+      model.addEventListener("model-error", event => {
+        debug.textContent += "\nSL.glb 読み込み失敗";
+        console.error(event.detail);
+      });
+
+      scene.appendChild(model);
     }
-  }
 
-  model.addEventListener("model-loaded", () => {
-    modelReady = true;
-    showModel();
-  });
-
-  navigator.geolocation.watchPosition(
-    position => {
-      gpsReady = true;
-
-      debug.textContent =
+    navigator.geolocation.watchPosition(
+      position => {
+        debug.textContent =
 `現在位置
 緯度: ${position.coords.latitude.toFixed(8)}
 経度: ${position.coords.longitude.toFixed(8)}
 GPS精度: ${position.coords.accuracy.toFixed(1)} m`;
 
-      showModel();
-    },
+        if (!modelCreated) {
+          setTimeout(createModel, 2000);
+        }
+      },
 
-    error => {
-      debug.textContent = `位置情報エラー: ${error.message}`;
-    },
+      error => {
+        debug.textContent =
+`位置情報エラー
+${error.message}`;
+      },
 
-    {
-      enableHighAccuracy: true,
-      maximumAge: 0,
-      timeout: 10000
-    }
-  );
-</script>
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 15000
+      }
+    );
+  </script>
+
+</body>
+</html>
