@@ -27,16 +27,17 @@
       left: 10px;
       z-index: 9999;
       padding: 10px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       color: #00ff00;
       white-space: pre-line;
+      font-size: 13px;
     }
   </style>
 </head>
 
 <body>
 
-  <div id="debug">GPS取得待機中...</div>
+  <div id="debug">GPS・モデル取得待機中...</div>
 
   <a-scene
     vr-mode-ui="enabled: false"
@@ -56,8 +57,9 @@
     >
     </a-camera>
 
-    <!-- 東公園のSL：まず1個だけ確認 -->
+    <!-- SL.glbをHTMLと同じ場所から読み込む -->
     <a-entity
+      id="sl-model"
       gps-entity-place="
         latitude: 37.94367248807764;
         longitude: 139.3323475293261;
@@ -71,20 +73,40 @@
 
   <script>
     const debug = document.getElementById("debug");
+    const model = document.getElementById("sl-model");
+
+    let gpsText = "GPS取得待機中...";
+    let modelText = "モデル読み込み中...";
+
+    function updateDebug() {
+      debug.textContent = `${gpsText}\n${modelText}`;
+    }
+
+    model.addEventListener("model-loaded", () => {
+      modelText = "SL.glb 読み込み成功";
+      updateDebug();
+    });
+
+    model.addEventListener("model-error", event => {
+      modelText = "SL.glb 読み込み失敗\nファイル名と配置を確認";
+      console.error("モデル読込エラー", event.detail);
+      updateDebug();
+    });
 
     navigator.geolocation.watchPosition(
       position => {
-        debug.textContent =
+        gpsText =
 `現在位置
 緯度: ${position.coords.latitude.toFixed(8)}
 経度: ${position.coords.longitude.toFixed(8)}
 GPS精度: ${position.coords.accuracy.toFixed(1)} m`;
+
+        updateDebug();
       },
 
       error => {
-        debug.textContent =
-`位置情報エラー
-${error.message}`;
+        gpsText = `位置情報エラー: ${error.message}`;
+        updateDebug();
       },
 
       {
