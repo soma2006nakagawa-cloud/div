@@ -1,213 +1,185 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>観光AR</title>
+  <meta charset="UTF-8">
 
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/three.js/build/ar-threex-location-only.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<style>
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: "Yu Gothic", system-ui, sans-serif;
-}
+  <title>観光AR</title>
 
-#debug {
-  position: fixed;
-  top: calc(10px + env(safe-area-inset-top));
-  left: 10px;
-  max-width: 62vw;
-  background: rgba(0,0,0,.72);
-  color: #00ff66;
-  padding: 9px 10px;
-  z-index: 9999;
-  white-space: pre-line;
-  font-size: 12px;
-  line-height: 1.45;
-  border-radius: 8px;
-}
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
-#back {
-  position: fixed;
-  top: calc(10px + env(safe-area-inset-top));
-  right: 10px;
-  z-index: 9999;
-}
+  <!-- AR.js -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
-#back button {
-  padding: 9px 12px;
-  border: 0;
-  border-radius: 8px;
-  background: #1976d2;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-}
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
 
-#guide {
-  position: fixed;
-  left: 12px;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  z-index: 9999;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.88);
-  color: #263238;
-  font-size: 12px;
-  text-align: center;
-}
+    #debug {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 9999;
 
-.a-enter-vr,
-.a-enter-ar {
-  display: none !important;
-}
-</style>
+      padding: 10px;
+      border-radius: 8px;
+
+      background: rgba(0, 0, 0, 0.7);
+      color: #00ff00;
+
+      font-size: 12px;
+      white-space: pre-line;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="debug">カメラ・GPS取得待機中...</div>
+  <div id="debug">GPS取得待機中...</div>
 
-<div id="back">
-  <button onclick="location.href='index.html'">← ホーム</button>
-</div>
+  <a-scene
+    vr-mode-ui="enabled: false"
+    embedded
+    arjs="
+      sourceType: webcam;
+      gpsMinDistance: 5;
+      gpsTimeInterval: 1000;
+      debugUIEnabled: false;
+    "
+  >
 
-<div id="guide">
-  観光モデルは登録地点の上空約3mに表示されます。スマホをゆっくり左右に向けてください。
-</div>
-
-<a-scene
-  vr-mode-ui="enabled:false"
-  embedded
-  renderer="antialias:true; alpha:true"
-  arjs="sourceType:webcam;
-         videoTexture:true;
-         debugUIEnabled:false;">
-
-  <a-assets timeout="120000">
-    <a-asset-item id="tour-model-1" src="models/shibata_station_ar_painted.glb"></a-asset-item>
-    <a-asset-item id="tour-model-2" src="models/shibata_jyo.glb"></a-asset-item>
-    <a-asset-item id="tour-model-3" src="models/Zousyunkaku.glb"></a-asset-item>
-    <a-asset-item id="tour-model-4" src="models/SL.glb"></a-asset-item>
-    <a-asset-item id="tour-model-5" src="models/Oumon.glb"></a-asset-item>
-    <a-asset-item id="tour-model-6" src="models/Funaguchi.glb"></a-asset-item>
-    <a-asset-item id="tour-model-7" src="models/Menchikatsu.glb"></a-asset-item>
-  </a-assets>
-
- <a-camera
-  gps-new-camera="gpsMinDistance:5"
-  camera="far:10000; near:0.1">
-</a-camera>
-
+    <!-- ARカメラ -->
+    <a-camera
+      gps-camera
+      rotation-reader
+      camera="
+        far: 10000;
+        near: 0.1;
+      "
+    >
+    </a-camera>
 
     <!-- 新発田駅 -->
-    <a-entity gps-entity-place="latitude:37.947; longitude:139.3276;">
-      <a-entity
-        gltf-model="#tour-model-1"
-        position="0 3.0 0"
-        scale="0.08 0.08 0.08"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <a-entity
+      gps-entity-place="
+        latitude: 37.94413;
+        longitude: 139.33510;
+      "
+      gltf-model="models/shibata_station_ar_painted.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
-
-    <!-- 新発田城 -->
-    <a-entity gps-new-entity-place="latitude:37.955467; longitude:139.325399;">
-      <a-entity
-        gltf-model="#tour-model-2"
-        position="0 3.0 0"
-        scale="0.22 0.22 0.22"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <!-- 新発田城跡 -->
+    <a-entity
+      gps-entity-place="
+        latitude: 37.954824724542696;
+        longitude: 139.326001834219947;
+      "
+      gltf-model="models/shibata_jyo.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
-
 
     <!-- 蔵春閣 -->
-    <a-entity gps-new-entity-place="latitude:37.943983; longitude:139.33174;">
-      <a-entity
-        gltf-model="#tour-model-3"
-        position="0 3.0 0"
-        scale="0.16 0.16 0.16"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <a-entity
+      gps-entity-place="
+        latitude: 37.94389807273562;
+        longitude: 139.3317142467578;
+      "
+      gltf-model="models/Zousyunkaku.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
-
-    <!-- 新発田東公園 SL -->
-    <a-entity gps-new-entity-place="latitude:37.94445; longitude:139.33315;">
-      <a-entity
-        gltf-model="#tour-model-4"
-        position="0 3.0 0"
-        scale="0.20 0.20 0.20"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <!-- 東公園のSL -->
+    <a-entity
+      gps-entity-place="
+        latitude: 37.94367248807764;
+        longitude: 139.3323475293261;
+      "
+      gltf-model="models/SL.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
-
-    <!-- 王紋 -->
-    <a-entity gps-new-entity-place="latitude:37.944107; longitude:139.330801;">
-      <a-entity
-        gltf-model="#tour-model-5"
-        position="0 3.0 0"
-        scale="1.8 1.8 1.8"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <!-- 王紋酒造 -->
+    <a-entity
+      gps-entity-place="
+        latitude: 37.94436989072327;
+        longitude: 139.33066511399528;
+      "
+      gltf-model="models/Oumon.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
-
-    <!-- 菊水ふなぐち -->
-    <a-entity gps-new-entity-place="latitude:37.99005; longitude:139.36704;">
-      <a-entity
-        gltf-model="#tour-model-6"
-        position="0 3.0 0"
-        scale="3 3 3"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <!-- 菊水 -->
+    <a-entity
+      gps-entity-place="
+        latitude: 37.960376479226;
+        longitude: 139.35429135822383;
+      "
+      gltf-model="models/Funaguchi.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
-
-    <!-- いじみのメンチ -->
-    <a-entity gps-new-entity-place="latitude:37.92839; longitude:139.35114;">
-      <a-entity
-        gltf-model="#tour-model-7"
-        position="0 3.0 0"
-        scale="1.5 1.5 1.5"
-        animation="property:rotation; to:0 360 0; loop:true; dur:20000">
-      </a-entity>
+    <!-- 五十公野メンチカツや -->
+    <a-entity
+      gps-entity-place="
+        latitude: 37.93682;
+        longitude: 139.34488;
+      "
+      gltf-model="models/Menchikatsu.glb"
+      position="0 2 0"
+      scale="0.1 0.1 0.1"
+    >
     </a-entity>
 
+  </a-scene>
 
-</a-scene>
+  <script>
+    const debug = document.getElementById("debug");
 
-<script>
-const debug = document.getElementById("debug");
-
-navigator.geolocation.watchPosition(
-  p => {
-    debug.textContent =
+    navigator.geolocation.watchPosition(
+      position => {
+        debug.textContent =
 `現在位置
-緯度:${p.coords.latitude.toFixed(8)}
-経度:${p.coords.longitude.toFixed(8)}
-GPS精度:${p.coords.accuracy.toFixed(1)} m
-観光AR地点数:7件`;
-  },
-  e => {
-    debug.textContent = "位置情報エラー: " + e.message;
-  },
-  {
-    enableHighAccuracy:true,
-    maximumAge:0,
-    timeout:15000
-  }
-);
-</script>
+緯度: ${position.coords.latitude.toFixed(8)}
+経度: ${position.coords.longitude.toFixed(8)}
+GPS精度: ${position.coords.accuracy.toFixed(1)} m`;
+      },
+
+      error => {
+        debug.textContent =
+`位置情報エラー
+${error.message}`;
+      },
+
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 10000
+      }
+    );
+  </script>
 
 </body>
 </html>
