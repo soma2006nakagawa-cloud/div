@@ -87,7 +87,9 @@ html, body {
   vr-mode-ui="enabled:false"
   embedded
   renderer="antialias:true; alpha:true"
-  arjs="sourceType:webcam; gpsMinDistance:5; gpsTimeInterval:1000; debugUIEnabled:false;">
+  arjs="sourceType:webcam;
+         videoTexture:true;
+         debugUIEnabled:false;">
 
   <a-assets timeout="120000">
     <a-asset-item id="tour-model-1" src="models/shibata_station_ar_painted.glb"></a-asset-item>
@@ -99,11 +101,10 @@ html, body {
     <a-asset-item id="tour-model-7" src="models/Menchikatsu.glb"></a-asset-item>
   </a-assets>
 
-  <a-camera
-    gps-camera
-    rotation-reader
-    camera="far:10000; near:0.1">
-  </a-camera>
+ <a-camera
+  gps-new-camera="gpsMinDistance:5"
+  camera="far:10000; near:0.1">
+</a-camera>
 
 
     <!-- 新発田駅 -->
@@ -118,7 +119,7 @@ html, body {
 
 
     <!-- 新発田城 -->
-    <a-entity gps-entity-place="latitude:37.955467; longitude:139.325399;">
+    <a-entity gps-new-entity-place="latitude:37.955467; longitude:139.325399;">
       <a-entity
         gltf-model="#tour-model-2"
         position="0 3.0 0"
@@ -129,7 +130,7 @@ html, body {
 
 
     <!-- 蔵春閣 -->
-    <a-entity gps-entity-place="latitude:37.943983; longitude:139.33174;">
+    <a-entity gps-new-entity-place="latitude:37.943983; longitude:139.33174;">
       <a-entity
         gltf-model="#tour-model-3"
         position="0 3.0 0"
@@ -140,7 +141,7 @@ html, body {
 
 
     <!-- 新発田東公園 SL -->
-    <a-entity gps-entity-place="latitude:37.94445; longitude:139.33315;">
+    <a-entity gps-new-entity-place="latitude:37.94445; longitude:139.33315;">
       <a-entity
         gltf-model="#tour-model-4"
         position="0 3.0 0"
@@ -151,7 +152,7 @@ html, body {
 
 
     <!-- 王紋 -->
-    <a-entity gps-entity-place="latitude:37.944107; longitude:139.330801;">
+    <a-entity gps-new-entity-place="latitude:37.944107; longitude:139.330801;">
       <a-entity
         gltf-model="#tour-model-5"
         position="0 3.0 0"
@@ -162,7 +163,7 @@ html, body {
 
 
     <!-- 菊水ふなぐち -->
-    <a-entity gps-entity-place="latitude:37.99005; longitude:139.36704;">
+    <a-entity gps-new-entity-place="latitude:37.99005; longitude:139.36704;">
       <a-entity
         gltf-model="#tour-model-6"
         position="0 3.0 0"
@@ -173,7 +174,7 @@ html, body {
 
 
     <!-- いじみのメンチ -->
-    <a-entity gps-entity-place="latitude:37.92839; longitude:139.35114;">
+    <a-entity gps-new-entity-place="latitude:37.92839; longitude:139.35114;">
       <a-entity
         gltf-model="#tour-model-7"
         position="0 3.0 0"
