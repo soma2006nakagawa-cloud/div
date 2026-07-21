@@ -2,20 +2,14 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>観光AR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>AR表示テスト</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       width: 100%;
       height: 100%;
@@ -26,100 +20,88 @@
       position: fixed;
       top: 10px;
       left: 10px;
+      right: 10px;
       z-index: 9999;
-
       padding: 10px;
       border-radius: 8px;
-
-      background: rgba(0, 0, 0, 0.75);
-      color: #00ff00;
-
+      background: rgba(0, 0, 0, 0.72);
+      color: #00ff66;
       font-size: 13px;
       white-space: pre-line;
+      pointer-events: none;
     }
   </style>
 </head>
 
 <body>
-
   <div id="debug">GPS取得待機中...</div>
 
   <a-scene
-    id="ar-scene"
+    id="scene"
     vr-mode-ui="enabled: false"
     embedded
-    arjs="
-      sourceType: webcam;
-      gpsMinDistance: 5;
-      gpsTimeInterval: 1000;
-      debugUIEnabled: false;
-    "
-  >
+    renderer="antialias: true; alpha: true"
+    arjs="sourceType: webcam; gpsMinDistance: 0; gpsTimeInterval: 1000; debugUIEnabled: false;">
 
     <a-camera
       gps-camera
       rotation-reader
-      camera="far: 10000; near: 0.1"
-    >
+      camera="near: 0.1; far: 10000">
     </a-camera>
-
   </a-scene>
 
   <script>
     const debug = document.getElementById("debug");
-    const scene = document.getElementById("ar-scene");
+    const scene = document.getElementById("scene");
 
-    let modelCreated = false;
+    let modelAdded = false;
 
-    function createModel() {
-      if (modelCreated) {
-        return;
-      }
+    function addModel(latitude, longitude) {
+      if (modelAdded) return;
+      modelAdded = true;
 
-      modelCreated = true;
+      // 現在地から約8m北側へ表示
+      const modelLatitude = latitude + 0.000072;
+      const modelLongitude = longitude;
 
       const model = document.createElement("a-entity");
-
       model.setAttribute(
         "gps-entity-place",
-        "latitude:37.94367248807764; longitude:139.3323475293261;"
+        `latitude: ${modelLatitude}; longitude: ${modelLongitude};`
       );
-
       model.setAttribute("gltf-model", "SL.glb");
-      model.setAttribute("scale", "2 2 2");
-      model.setAttribute("position", "0 0 0");
+      model.setAttribute("scale", "1 1 1");
+      model.setAttribute("rotation", "0 180 0");
 
       model.addEventListener("model-loaded", () => {
-        debug.textContent += "\nSL.glb 読み込み成功";
+        debug.textContent += "\nSL.glb 読み込み成功\n約8m北側を向いてください";
       });
 
-      model.addEventListener("model-error", event => {
-        debug.textContent += "\nSL.glb 読み込み失敗";
-        console.error(event.detail);
+      model.addEventListener("model-error", (event) => {
+        debug.textContent += "\nSL.glb 読み込み失敗\nHTMLと同じ場所にSL.glbを置いてください";
+        console.error("model-error", event.detail);
       });
 
       scene.appendChild(model);
     }
 
     navigator.geolocation.watchPosition(
-      position => {
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
+
         debug.textContent =
 `現在位置
-緯度: ${position.coords.latitude.toFixed(8)}
-経度: ${position.coords.longitude.toFixed(8)}
-GPS精度: ${position.coords.accuracy.toFixed(1)} m`;
+緯度: ${lat.toFixed(8)}
+経度: ${lng.toFixed(8)}
+GPS精度: ${accuracy.toFixed(1)} m`;
 
-        if (!modelCreated) {
-          setTimeout(createModel, 2000);
-        }
+        addModel(lat, lng);
       },
-
-      error => {
-        debug.textContent =
-`位置情報エラー
-${error.message}`;
+      (error) => {
+        debug.textContent = `位置情報エラー: ${error.message}`;
       },
-
       {
         enableHighAccuracy: true,
         maximumAge: 0,
@@ -127,6 +109,5 @@ ${error.message}`;
       }
     );
   </script>
-
 </body>
 </html>
