@@ -59,63 +59,59 @@
 
     <!-- SL.glbをHTMLと同じ場所から読み込む -->
     <a-entity
-      id="sl-model"
-      gps-entity-place="
-        latitude: 37.94367248807764;
-        longitude: 139.3323475293261;
-      "
-      gltf-model="SL.glb"
-      scale="2 2 2"
-    >
-    </a-entity>
+  id="sl-model"
+  gps-entity-place="
+    latitude: 37.94367248807764;
+    longitude: 139.3323475293261;
+  "
+  gltf-model="SL.glb"
+  scale="2 2 2"
+  visible="false">
+</a-entity>
 
   </a-scene>
 
-  <script>
-    const debug = document.getElementById("debug");
-    const model = document.getElementById("sl-model");
+ <script>
+  const debug = document.getElementById("debug");
+  const model = document.getElementById("sl-model");
 
-    let gpsText = "GPS取得待機中...";
-    let modelText = "モデル読み込み中...";
+  let gpsReady = false;
+  let modelReady = false;
 
-    function updateDebug() {
-      debug.textContent = `${gpsText}\n${modelText}`;
+  function showModel() {
+    if (gpsReady && modelReady) {
+      setTimeout(() => {
+        model.setAttribute("visible", true);
+      }, 1500);
     }
+  }
 
-    model.addEventListener("model-loaded", () => {
-      modelText = "SL.glb 読み込み成功";
-      updateDebug();
-    });
+  model.addEventListener("model-loaded", () => {
+    modelReady = true;
+    showModel();
+  });
 
-    model.addEventListener("model-error", event => {
-      modelText = "SL.glb 読み込み失敗\nファイル名と配置を確認";
-      console.error("モデル読込エラー", event.detail);
-      updateDebug();
-    });
+  navigator.geolocation.watchPosition(
+    position => {
+      gpsReady = true;
 
-    navigator.geolocation.watchPosition(
-      position => {
-        gpsText =
+      debug.textContent =
 `現在位置
 緯度: ${position.coords.latitude.toFixed(8)}
 経度: ${position.coords.longitude.toFixed(8)}
 GPS精度: ${position.coords.accuracy.toFixed(1)} m`;
 
-        updateDebug();
-      },
+      showModel();
+    },
 
-      error => {
-        gpsText = `位置情報エラー: ${error.message}`;
-        updateDebug();
-      },
+    error => {
+      debug.textContent = `位置情報エラー: ${error.message}`;
+    },
 
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 10000
-      }
-    );
-  </script>
-
-</body>
-</html>
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 10000
+    }
+  );
+</script>
