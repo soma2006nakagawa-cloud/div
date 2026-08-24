@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>職短 hellotore AR</title>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}#debug{position:fixed;top:10px;left:10px;right:10px;z-index:9999;padding:10px;background:rgba(0,0,0,.72);color:#0f0;border-radius:8px;white-space:pre-line;font-size:13px}</style>
+</head><body>
+<div id="debug">GPS・モデル取得待機中...</div>
+<a-scene vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
+<a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
+<a-entity id="model" gps-entity-place="latitude:37.95588068; longitude:139.3382848;" gltf-model="hellotore.glb" position="0 2 0" scale="0.2 0.2 0.2" rotation="0 180 0"></a-entity>
+</a-scene>
+<script>
+const d=document.getElementById('debug'),m=document.getElementById('model');
+let state='hellotore.glb 読み込み中...';
+m.addEventListener('model-loaded',()=>state='hellotore.glb 読み込み成功');
+m.addEventListener('model-error',e=>{state='hellotore.glb 読み込み失敗';console.error(e.detail)});
+function r(v){return v*Math.PI/180}
+function dist(a,b,c,e){const R=6371000,x=r(c-a),y=r(e-b),q=Math.sin(x/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(q),Math.sqrt(1-q))}
+navigator.geolocation.watchPosition(p=>{
+const a=p.coords.latitude,b=p.coords.longitude,x=dist(a,b,37.95588068,139.3382848);
+d.textContent=`現在位置
+緯度:${a.toFixed(8)}
+経度:${b.toFixed(8)}
+GPS精度:${p.coords.accuracy.toFixed(1)} m
+職短まで:${x.toFixed(1)} m
+${state}`;
+},e=>d.textContent='位置情報エラー: '+e.message,{enableHighAccuracy:true,maximumAge:0,timeout:15000});
+</script></body></html>
