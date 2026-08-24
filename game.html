@@ -11,7 +11,15 @@
 <div id="debug">GPS・モデル取得待機中...</div>
 <a-scene vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
 <a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
-<a-entity id="model" gps-entity-place="latitude:37.95588068; longitude:139.3382848;" gltf-model="hellotore.glb" position="0 2 0" scale="0.2 0.2 0.2" rotation="0 180 0"></a-entity>
+<!-- 新潟職業能力開発短期大学校：ハロトレくん -->
+<a-entity
+  id="hellotore"
+  gps-entity-place="latitude:37.95588068; longitude:139.3382848;"
+  gltf-model="hellotore_kun.glb"
+  position="0 2 0"
+  scale="0.2 0.2 0.2"
+  rotation="0 180 0">
+</a-entity>
 </a-scene>
 <script>
 const d=document.getElementById('debug'),m=document.getElementById('model');
