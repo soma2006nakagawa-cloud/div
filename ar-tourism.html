@@ -4,120 +4,110 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <title>新発田観光AR</title>
-
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-
   <style>
-    html,body{
-      margin:0;
-      width:100%;
-      height:100%;
-      overflow:hidden;
-    }
-
+    html,body{margin:0;width:100%;height:100%;overflow:hidden}
     #debug{
-      position:fixed;
-      top:10px;
-      left:10px;
-      right:10px;
-      z-index:9999;
-      padding:10px;
-      border-radius:8px;
-      background:rgba(0,0,0,.72);
-      color:#0f0;
-      font-size:13px;
-      line-height:1.45;
-      white-space:pre-line;
-      pointer-events:none;
+      position:fixed;top:10px;left:10px;right:10px;z-index:9999;
+      padding:10px;border-radius:8px;background:rgba(0,0,0,.72);
+      color:#00ff66;font-size:12px;line-height:1.45;white-space:pre-line;
+      pointer-events:none
     }
   </style>
 </head>
-
 <body>
-  <div id="debug">GPS取得待機中...</div>
+<div id="debug">GPS取得待機中...</div>
 
-  <a-scene
-    vr-mode-ui="enabled:false"
-    embedded
-    arjs="sourceType:webcam;gpsMinDistance:5;gpsTimeInterval:1000;debugUIEnabled:false;">
+<a-scene
+  vr-mode-ui="enabled:false"
+  embedded
+  arjs="sourceType:webcam;gpsMinDistance:5;gpsTimeInterval:1000;debugUIEnabled:false;">
 
-    <a-camera
-      gps-camera
-      rotation-reader
-      camera="far:10000;near:0.1">
-    </a-camera>
+  <a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
 
-    <!-- 新発田城 -->
-    <a-entity
-      gps-entity-place="latitude:37.93963891; longitude:139.3260018342;"
-      gltf-model="shibata_jyo.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="castle"
+    gps-entity-place="latitude:37.954824724542696; longitude:139.326001834219947;"
+    gltf-model="shibata_jyo.glb"
+    position="0 2 0"
+    scale="0.2 0.2 0.2"
+    rotation="0 180 0"></a-entity>
 
-    <!-- 蔵春閣 -->
-    <a-entity
-      gps-entity-place="latitude:37.9438980727; longitude:139.3317142467;"
-      gltf-model="Zousyunkaku.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="zousyunkaku"
+    gps-entity-place="latitude:37.94389807273562; longitude:139.3317142467578;"
+    gltf-model="Zousyunkaku.glb"
+    position="0 2 0"
+    scale="0.2 0.2 0.2"
+    rotation="0 180 0"></a-entity>
 
-    <!-- 東公園のSL -->
-    <a-entity
-      gps-entity-place="latitude:37.9436724880; longitude:139.3323475293;"
-      gltf-model="SL.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="sl"
+    gps-entity-place="latitude:37.94367248807764; longitude:139.3323475293261;"
+    gltf-model="SL.glb"
+    position="0 2 0"
+    scale="0.2 0.2 0.2"
+    rotation="0 180 0"></a-entity>
 
-    <!-- 王紋酒造 -->
-    <a-entity
-      gps-entity-place="latitude:37.9443698907; longitude:139.3306651140;"
-      gltf-model="Oumon.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="oumon"
+    gps-entity-place="latitude:37.94436989072327; longitude:139.33066511399528;"
+    gltf-model="Oumon.glb"
+    position="0 2 0"
+    scale="0.25 0.25 0.25"
+    rotation="0 180 0"></a-entity>
 
-    <!-- 新発田駅 -->
-    <a-entity
-      gps-entity-place="latitude:37.944700; longitude:139.335200;"
-      gltf-model="shibata_station.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="station"
+    gps-entity-place="latitude:37.94413; longitude:139.33510;"
+    gltf-model="shibata_station.glb"
+    position="0 2 0"
+    scale="0.2 0.2 0.2"
+    rotation="0 180 0"></a-entity>
 
-    <!-- メンチカツ -->
-    <a-entity
-      gps-entity-place="latitude:37.950300; longitude:139.327600;"
-      gltf-model="Menchikatsu.glb"
-      scale="0.08 0.08 0.08"
-      rotation="0 180 0">
-    </a-entity>
+  <a-entity id="menchi"
+    gps-entity-place="latitude:37.93682; longitude:139.34488;"
+    gltf-model="Menchikatsu.glb"
+    position="0 2 0"
+    scale="0.25 0.25 0.25"
+    rotation="0 180 0"></a-entity>
 
-  </a-scene>
+</a-scene>
 
-  <script>
-    const debug = document.getElementById("debug");
+<script>
+const debug=document.getElementById("debug");
+const modelIds=[
+  ["castle","新発田城"],
+  ["zousyunkaku","蔵春閣"],
+  ["sl","SL"],
+  ["oumon","王紋"],
+  ["station","新発田駅"],
+  ["menchi","メンチカツ"]
+];
 
-    navigator.geolocation.watchPosition(
-      position => {
-        debug.textContent =
+let loadedCount=0;
+let loadedNames=[];
+
+modelIds.forEach(([id,name])=>{
+  const el=document.getElementById(id);
+  el.addEventListener("model-loaded",()=>{
+    loadedCount++;
+    loadedNames.push(name);
+  });
+  el.addEventListener("model-error",e=>{
+    console.error(name+" 読み込み失敗",e.detail);
+  });
+});
+
+navigator.geolocation.watchPosition(
+  p=>{
+    debug.textContent=
 `現在位置
-緯度:${position.coords.latitude.toFixed(8)}
-経度:${position.coords.longitude.toFixed(8)}
-GPS精度:${position.coords.accuracy.toFixed(1)} m`;
-      },
-      error => {
-        debug.textContent = "位置情報エラー: " + error.message;
-      },
-      {
-        enableHighAccuracy:true,
-        maximumAge:0,
-        timeout:15000
-      }
-    );
-  </script>
+緯度:${p.coords.latitude.toFixed(8)}
+経度:${p.coords.longitude.toFixed(8)}
+GPS精度:${p.coords.accuracy.toFixed(1)} m
+モデル読込:${loadedCount}/6
+${loadedNames.join(" / ")}`;
+  },
+  e=>{debug.textContent="位置情報エラー: "+e.message;},
+  {enableHighAccuracy:true,maximumAge:0,timeout:15000}
+);
+</script>
 </body>
 </html>
