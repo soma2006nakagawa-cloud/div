@@ -5,100 +5,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>職短 ハロトレくん ARテスト</title>
-
+<title>職短 ハロトレくん AR</title>
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-
 <style>
 html,body{margin:0;width:100%;height:100%;overflow:hidden}
-#debug{
-  position:fixed;top:10px;left:10px;right:10px;z-index:9999;
-  padding:10px;background:rgba(0,0,0,.72);color:#00ff66;
-  border-radius:8px;white-space:pre-line;font-size:13px;line-height:1.45;
-  pointer-events:none;
-}
+#debug{position:fixed;top:10px;left:10px;right:10px;z-index:9999;padding:10px;border-radius:8px;background:rgba(0,0,0,.72);color:#0f0;font-size:13px;line-height:1.45;white-space:pre-line}
 </style>
 </head>
-
 <body>
-
-<div id="debug">GPS・モデル取得待機中...</div>
-
-<a-scene
-  vr-mode-ui="enabled:false"
-  embedded
-  arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
-
-  <a-camera
-    gps-camera
-    rotation-reader
-    camera="far:10000;near:0.1">
-  </a-camera>
-
-  <!-- 新潟職業能力開発短期大学校：ハロトレくん -->
-  <a-entity
-    id="hellotore"
-    gps-entity-place="latitude:37.95588068; longitude:139.3382848;"
-    gltf-model="hellotore_kun.glb"
-    position="0 2 0"
-    scale="0.2 0.2 0.2"
-    rotation="0 180 0">
-  </a-entity>
-
+<div id="debug">GPS取得待機中...</div>
+<a-scene id="scene" vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
+<a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
 </a-scene>
-
 <script>
-const debug = document.getElementById("debug");
-const model = document.getElementById("hellotore");
+const d=document.getElementById('debug');
+const scene=document.getElementById('scene');
+const CAMPUS_LAT=37.95588068;
+const CAMPUS_LNG=139.3382848;
+const ACTIVE_RADIUS=300;
+let created=false;
+let state='モデル未作成';
 
-let modelState = "hellotore_kun.glb 読み込み中...";
-
-model.addEventListener("model-loaded", () => {
-  modelState = "hellotore_kun.glb 読み込み成功";
-});
-
-model.addEventListener("model-error", e => {
-  modelState = "hellotore_kun.glb 読み込み失敗";
-  console.error("model-error", e.detail);
-});
-
-function rad(v){ return v * Math.PI / 180; }
-
-function distanceMeters(lat1,lng1,lat2,lng2){
-  const R=6371000;
-  const dLat=rad(lat2-lat1);
-  const dLng=rad(lng2-lng1);
-  const a=
-    Math.sin(dLat/2)**2 +
-    Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLng/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+function r(v){return v*Math.PI/180}
+function dist(a,b,c,e){
+  const R=6371000,x=r(c-a),y=r(e-b);
+  const q=Math.sin(x/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(y/2)**2;
+  return R*2*Math.atan2(Math.sqrt(q),Math.sqrt(1-q));
 }
 
-navigator.geolocation.watchPosition(
-  p => {
-    const lat=p.coords.latitude;
-    const lng=p.coords.longitude;
-    const dist=distanceMeters(lat,lng,37.95588068,139.3382848);
+function createModel(lat,lng){
+  if(created)return;
+  created=true;
+  state='hellotore_kun.glb 読み込み中...';
 
-    debug.textContent =
-`現在位置
+  const model=document.createElement('a-entity');
+  model.setAttribute('gps-entity-place',`latitude:${lat+8/111320}; longitude:${lng};`);
+  model.setAttribute('gltf-model','hellotore_kun.glb');
+  model.setAttribute('scale','1 1 1');
+  model.setAttribute('position','0 2 0');
+  model.setAttribute('rotation','0 180 0');
+
+  model.addEventListener('model-loaded',()=>{
+    state='hellotore_kun.glb 読み込み成功\n約8m北側を向いてください';
+  });
+  model.addEventListener('model-error',e=>{
+    state='hellotore_kun.glb 読み込み失敗';
+    console.error(e.detail);
+  });
+
+  scene.appendChild(model);
+}
+
+navigator.geolocation.watchPosition(p=>{
+  const lat=p.coords.latitude,lng=p.coords.longitude;
+  const cd=dist(lat,lng,CAMPUS_LAT,CAMPUS_LNG);
+
+  if(cd<=ACTIVE_RADIUS) createModel(lat,lng);
+
+  d.textContent=`現在位置
 緯度:${lat.toFixed(8)}
 経度:${lng.toFixed(8)}
 GPS精度:${p.coords.accuracy.toFixed(1)} m
-職短まで:${dist.toFixed(1)} m
-${modelState}`;
-  },
-  e => {
-    debug.textContent="位置情報エラー: "+e.message;
-  },
-  {
-    enableHighAccuracy:true,
-    maximumAge:0,
-    timeout:15000
-  }
-);
-</script>
+職短まで:${cd.toFixed(1)} m
 
+${cd<=ACTIVE_RADIUS?'職短エリア内：ハロトレくん表示中':'職短から300m以内に入ると表示'}
+
+${state}`;
+},e=>d.textContent='位置情報エラー: '+e.message,{enableHighAccuracy:true,maximumAge:0,timeout:15000});
+</script>
 </body>
 </html>
+
