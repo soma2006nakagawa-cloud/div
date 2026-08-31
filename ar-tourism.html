@@ -64,15 +64,20 @@ function createSpotModel(spot,userLat,userLng){
  created.set(spot.id,entity);
 }
 
-function removeFarModels(lat,lng){
- spots.forEach(spot=>{
-   const d=distanceMeters(lat,lng,spot.lat,spot.lng);
-   if(d>ACTIVE_RADIUS&&created.has(spot.id)){
-     created.get(spot.id).remove();
-     created.delete(spot.id);
-     states.delete(spot.id);
+function showOnlyNearestModel(nearest,nearestDistance,userLat,userLng){
+ const activeId=nearestDistance<=ACTIVE_RADIUS?nearest.id:null;
+
+ created.forEach((entity,id)=>{
+   if(id!==activeId){
+     entity.remove();
+     created.delete(id);
+     states.delete(id);
    }
  });
+
+ if(activeId&&!created.has(activeId)){
+   createSpotModel(nearest,userLat,userLng);
+ }
 }
 
 navigator.geolocation.watchPosition(
@@ -81,12 +86,11 @@ navigator.geolocation.watchPosition(
    let nearest=null,nearestDistance=Infinity;
 
    spots.forEach(spot=>{
-     const d=distanceMeters(lat,lng,spot.lat,spot.lng);
-     if(d<nearestDistance){nearestDistance=d;nearest=spot}
-     if(d<=ACTIVE_RADIUS)createSpotModel(spot,lat,lng);
-   });
+   const d=distanceMeters(lat,lng,spot.lat,spot.lng);
+   if(d<nearestDistance){nearestDistance=d;nearest=spot}
+ });
 
-   removeFarModels(lat,lng);
+   showOnlyNearestModel(nearest,nearestDistance,lat,lng);
 
    const active=spots.filter(s=>created.has(s.id)).map(s=>`${s.name}:${states.get(s.id)||"準備中"}`).join("\n");
 
