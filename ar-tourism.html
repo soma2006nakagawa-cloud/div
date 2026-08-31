@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>新発田 観光AR 完成版</title>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+#debug{position:fixed;top:10px;left:10px;right:10px;z-index:9999;padding:10px;border-radius:8px;background:rgba(0,0,0,.72);color:#0f0;font-size:13px;line-height:1.45;white-space:pre-line;pointer-events:none}
+#back{position:fixed;right:10px;bottom:12px;z-index:9999}
+#back button{border:none;border-radius:10px;padding:11px 15px;background:#1976d2;color:#fff;font-size:14px;font-weight:bold}
+</style>
+</head>
+<body>
+<div id="debug">GPS取得待機中...</div>
+<div id="back"><button onclick="location.href='index.html'">← ホーム</button></div>
+
+<a-scene id="scene" vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
+<a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
+</a-scene>
+
+<script>
+const debug=document.getElementById("debug");
+const scene=document.getElementById("scene");
+
+const spots=[
+{id:"castle",name:"新発田城",lat:37.954824724542696,lng:139.326001834219947,model:"shibata_jyo.glb",scale:"1 1 1"},
+{id:"zousyunkaku",name:"蔵春閣",lat:37.94389807273562,lng:139.3317142467578,model:"Zousyunkaku.glb",scale:"1 1 1"},
+{id:"sl",name:"東公園のSL",lat:37.94367248807764,lng:139.3323475293261,model:"SL.glb",scale:"1 1 1"},
+{id:"oumon",name:"王紋酒造",lat:37.94436989072327,lng:139.33066511399528,model:"Oumon.glb",scale:"1 1 1"},
+{id:"station",name:"新発田駅",lat:37.94413,lng:139.33510,model:"shibata_station.glb",scale:"1 1 1"},
+{id:"menchi",name:"五十公野メンチカツや",lat:37.93682,lng:139.34488,model:"Menchikatsu.glb",scale:"1 1 1"},
+{id:"hellotore",name:"新潟職業能力開発短期大学校",lat:37.95588068,lng:139.3382848,model:"hellotore_kun.glb",scale:"1 1 1"}
+];
+
+const ACTIVE_RADIUS=300;
+const DISPLAY_DISTANCE=8;
+const DISPLAY_HEIGHT=2;
+const created=new Map();
+const states=new Map();
+
+function rad(v){return v*Math.PI/180}
+function distanceMeters(lat1,lng1,lat2,lng2){
+ const R=6371000,dLat=rad(lat2-lat1),dLng=rad(lng2-lng1);
+ const a=Math.sin(dLat/2)**2+Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLng/2)**2;
+ return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function createSpotModel(spot,userLat,userLng){
+ if(created.has(spot.id))return;
+ const entity=document.createElement("a-entity");
+ const modelLat=userLat+(DISPLAY_DISTANCE/111320);
+ entity.setAttribute("gps-entity-place",`latitude:${modelLat}; longitude:${userLng};`);
+ entity.setAttribute("gltf-model",spot.model);
+ entity.setAttribute("scale",spot.scale);
+ entity.setAttribute("position",`0 ${DISPLAY_HEIGHT} 0`);
+ entity.setAttribute("rotation","0 180 0");
+ states.set(spot.id,"読み込み中");
+ entity.addEventListener("model-loaded",()=>states.set(spot.id,"表示中"));
+ entity.addEventListener("model-error",e=>{states.set(spot.id,"読込失敗");console.error(spot.name,e.detail)});
+ scene.appendChild(entity);
+ created.set(spot.id,entity);
+}
+
+function showOnlyNearestModel(nearest,nearestDistance,userLat,userLng){
+ const activeId=nearestDistance<=ACTIVE_RADIUS?nearest.id:null;
+
+ created.forEach((entity,id)=>{
+   if(id!==activeId){
+     entity.remove();
+     created.delete(id);
+     states.delete(id);
+   }
+ });
+
+ if(activeId&&!created.has(activeId)){
+   createSpotModel(nearest,userLat,userLng);
+ }
+}
+
+navigator.geolocation.watchPosition(
+ p=>{
+   const lat=p.coords.latitude,lng=p.coords.longitude,accuracy=p.coords.accuracy;
+   let nearest=null,nearestDistance=Infinity;
+
+   spots.forEach(spot=>{
+   const d=distanceMeters(lat,lng,spot.lat,spot.lng);
+   if(d<nearestDistance){nearestDistance=d;nearest=spot}
+ });
+
+   showOnlyNearestModel(nearest,nearestDistance,lat,lng);
+
+   const active=spots.filter(s=>created.has(s.id)).map(s=>`${s.name}:${states.get(s.id)||"準備中"}`).join("\n");
+
+   debug.textContent=`現在位置
+緯度:${lat.toFixed(8)}
+経度:${lng.toFixed(8)}
+GPS精度:${accuracy.toFixed(1)} m
+
+最寄り:${nearest?nearest.name:"-"}
+距離:${nearestDistance<Infinity?nearestDistance.toFixed(1):"-"} m
+
+300m以内のモデル
+${active||"なし"}`;
+ },
+ e=>debug.textContent=`位置情報エラー
+${e.message}`,
+ {enableHighAccuracy:true,maximumAge:0,timeout:15000}
+);
+</script>
+</body>
+</html>
