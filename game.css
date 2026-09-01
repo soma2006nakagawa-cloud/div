@@ -1,0 +1,12 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,"Yu Gothic","Meiryo",sans-serif;text-align:center;background:#fff}
+header{position:relative;background:orange;color:white;padding:15px;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+header h1{font-size:24px}
+.back-button{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:white;text-decoration:none;font-size:38px;line-height:1}
+#map{height:350px;width:95%;margin:auto;border:2px solid black}
+#result{margin-top:20px;font-size:18px;color:blue}
+#coords{margin:10px auto 0;font-size:14px;background:#fff;padding:10px;border-radius:8px;width:250px;border:1px solid #ccc}
+#totalScore{margin:10px auto;padding:10px;width:250px;background:#fff3cd;border:2px solid #ffc107;border-radius:8px;font-size:22px;font-weight:bold;color:#333}
+#resetButton{margin:15px;padding:10px 20px;background:#555;color:white;border:0;border-radius:6px;font-size:16px;cursor:pointer}
+#resetButton:hover{background:#333}
+@media screen and (max-width:768px){header h1{font-size:22px}}
