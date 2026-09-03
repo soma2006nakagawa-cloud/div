@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>コレクション図鑑 | 新発田街歩きアプリ</title>
+<link rel="stylesheet" href="collection.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+<header class="collection-header">
+  <a class="back-button" href="index.html" aria-label="ホームへ戻る">‹</a>
+  <div>
+    <h1>コレクション図鑑</h1>
+    <p>観光スポットに近づいて図鑑を完成させよう</p>
+  </div>
+</header>
+
+<main>
+  <section class="progress-panel" aria-label="図鑑の進行状況">
+    <div class="progress-text"><strong id="progressCount">0 / 7</strong><span>スポット解放</span></div>
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <p id="locationStatus">現在地を確認しています...</p>
+  </section>
+  <section id="collectionGrid" class="collection-grid"></section>
+</main>
+
+<script src="collection-data.js"></script>
+<script src="collection-tracker.js"></script>
+<script src="collection.js"></script>
+</body>
+</html>
