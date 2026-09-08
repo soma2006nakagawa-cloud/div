@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>実績・称号 | しばコレ</title>
+<link rel="stylesheet" href="achievements.css">
+</head>
+<body>
+<header class="page-header">
+  <a class="back-button" href="index.html" aria-label="ホームへ戻る">‹</a>
+  <div><h1>実績・称号</h1><p>新発田を巡って実績を集めよう</p></div>
+</header>
+
+<main>
+  <section class="title-card">
+    <span class="crown">👑</span>
+    <div><p>現在の称号</p><h2 id="currentTitle">新発田ビギナー</h2></div>
+    <strong id="totalScore">0 pt</strong>
+  </section>
+
+  <section class="next-title-panel">
+    <div><span id="nextTitleLabel">次の称号まで</span><strong id="nextTitlePoints">500 pt</strong></div>
+    <div class="progress-track"><div id="titleProgress"></div></div>
+  </section>
+
+  <section class="summary">
+    <div><strong id="achievementCount">0 / 11</strong><span>実績</span></div>
+    <div><strong id="visitedCount">0 / 7</strong><span>図鑑</span></div>
+    <div><strong id="quizCount">0</strong><span>回答地点</span></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">称号一覧</h2>
+    <div id="titleList" class="title-list"></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">実績一覧</h2>
+    <div id="achievementGrid" class="achievement-grid"></div>
+  </section>
+</main>
+
+<script src="achievements.js"></script>
+</body>
+</html>
