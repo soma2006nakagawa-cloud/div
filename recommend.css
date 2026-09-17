@@ -1,0 +1,187 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Yu Gothic", "Meiryo", sans-serif;
+    min-height: 100vh;
+    background-color: #eef4ff;
+    color: #333;
+}
+
+header {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #9c4b4b, #a63d3d);
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.back-button {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+    line-height: 1;
+}
+
+.app-name {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: .9;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+}
+
+header p {
+    margin: 0;
+}
+
+main {
+    max-width: 430px;
+    min-height: calc(100vh - 145px);
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+    background: #f5f3ed;
+}
+
+.question {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.question h2 {
+    margin-top: 0;
+    color: #7b1e1e;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.buttons button {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buttons button:hover { /*カーソルが乗った時の色*/
+    background-color: #f8eaea;
+    border-color: #a63d3d;
+}
+
+.buttons button.selected {  /*クリック時の色*/
+    background-color: #a63d3d;
+    color: white;
+    border-color: #7b1e1e;
+}
+
+#searchButton {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    margin: 30px 0;
+    background-color: #d69a2d;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    background-color: #bd8420;
+}
+
+#result {
+    display: none;
+}
+
+#result h2 {
+    color: #7b1e1e;
+}
+
+.spot-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.spot-card h3 {
+    margin-top: 0;
+    color: #7b1e1e;
+    font-size: 22px;
+}
+
+.rank {
+    color: #d69a2d;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.score {
+    display: inline-block;
+    background-color: #f8eaea;
+    color: #7b1e1e;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.reason {
+    background-color: #f5f3ed;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.access {
+    color: #555;
+    margin-top: 10px;
+}
+
+.map-link {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 16px;
+    border-radius: 20px;
+    background: #5c982e;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 26px;
+    }
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+    .question {
+        padding: 20px 15px;
+    }
+}
