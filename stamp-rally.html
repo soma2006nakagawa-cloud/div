@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>スタンプラリー | しばコレ</title>
+  <link rel="stylesheet" href="stamp-rally.css">
+</head>
+<body>
+  <main class="app">
+    <header class="page-header">
+      <a class="back" href="index.html" aria-label="ホームへ戻る">‹</a>
+      <div><p>しばコレ</p><h1>スタンプラリー</h1></div>
+      <div class="score" id="totalScore">0 pt</div>
+    </header>
+
+    <section class="hero">
+      <div class="progress-head"><strong id="stampCount">0 / 7</strong><span id="progressText">街歩きを始めよう！</span></div>
+      <div class="progress"><div id="progressBar"></div></div>
+      <p>観光スポットの100m以内に入ると、スタンプを自動で獲得します。</p>
+    </section>
+
+    <section id="status" class="status">現在地を取得しています...</section>
+    <section id="completeMessage" class="complete" hidden>🎉 全スタンプ達成！ コンプリートボーナスを獲得しました。</section>
+    <section id="stampGrid" class="stamp-grid" aria-live="polite"></section>
+
+    <footer>
+      <p>各スタンプ：50ポイント／全件達成：追加200ポイント</p>
+      <a href="map.html">マップを開く</a>
+    </footer>
+  </main>
+  <script src="collection-data.js"></script>
+  <script src="stamp-rally.js"></script>
+</body>
+</html>

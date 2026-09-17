@@ -1,0 +1,23 @@
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#fff7ed;color:#3d352f;font-family:"Yu Gothic",system-ui,sans-serif}
+.app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:#fff;padding-bottom:30px;box-shadow:0 0 28px rgba(70,45,20,.12)}
+.page-header{display:flex;align-items:center;gap:14px;padding:20px;background:linear-gradient(135deg,#f39a3c,#df6c24);color:#fff}
+.page-header p,.page-header h1{margin:0}.page-header p{font-size:12px;opacity:.9}.page-header h1{font-size:24px}
+.back{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;text-decoration:none;font-size:34px;line-height:1}
+.score{margin-left:auto;padding:8px 11px;border-radius:18px;background:rgba(255,255,255,.2);font-weight:bold;white-space:nowrap}
+.hero{margin:18px;padding:18px;border-radius:18px;background:#fff5e7;border:1px solid #f2d2ae}
+.progress-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.progress-head strong{font-size:25px;color:#d96320}.progress-head span{font-size:13px;font-weight:bold}
+.progress{height:12px;margin:12px 0;border-radius:99px;background:#eadbc9;overflow:hidden}.progress div{height:100%;width:0;background:linear-gradient(90deg,#f7ad42,#dc6823);transition:width .35s}
+.hero p{margin:0;color:#695d53;font-size:13px;line-height:1.6}
+.status,.complete{margin:0 18px 14px;padding:12px 14px;border-radius:12px;font-size:13px;font-weight:bold}
+.status{background:#eef7ff;color:#28658c}.status.error{background:#fff0f0;color:#a33}
+.complete{background:#fff0b7;color:#7c5700;border:1px solid #edcf57}
+.stamp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:4px 18px 20px}
+.stamp-card{position:relative;min-height:180px;padding:15px 12px;border:2px dashed #d7c8b8;border-radius:18px;background:#faf7f3;text-align:center;color:#877b70}
+.stamp-card.collected{border:2px solid #ef9140;background:linear-gradient(160deg,#fffaf3,#ffebd1);color:#4a382d;box-shadow:0 7px 15px rgba(199,104,29,.13)}
+.stamp-mark{display:grid;place-items:center;width:82px;height:82px;margin:0 auto 10px;border-radius:50%;background:#e9e2da;font-size:42px;filter:grayscale(1);opacity:.6}
+.collected .stamp-mark{background:#fff;border:4px double #df7028;color:#d95e18;filter:none;opacity:1;transform:rotate(-7deg)}
+.stamp-card h2{margin:0 0 7px;font-size:16px}.stamp-card p{margin:0;font-size:12px;line-height:1.45}
+.stamp-card .date{display:block;margin-top:7px;color:#b05218;font-size:11px;font-weight:bold}
+footer{text-align:center;padding:0 18px;color:#776b62;font-size:12px}footer a{display:inline-block;margin-top:8px;padding:11px 22px;border-radius:22px;background:#e4772d;color:white;text-decoration:none;font-weight:bold}
+@media(max-width:340px){.stamp-grid{grid-template-columns:1fr}}
