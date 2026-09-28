@@ -5,7 +5,7 @@ const spots = [
         lat: 37.954824724542696,   //緯度
         lng: 139.326001834219947,  //経度
         radius: 50,                //leaflet-circle-radius[m] 有効範囲
-        image:"spot-photos/castle.png"         //イメージ画像
+        image:"castle.png"         //イメージ画像
     },
     {
         name: "清水園",
