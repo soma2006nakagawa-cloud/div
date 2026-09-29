@@ -68,36 +68,108 @@ body {
 }
 
 .header-menu {
-  position: absolute;
-  z-index: 1000;
-  top: 88px;
-  right: 22px;
-  width: 210px;
-  padding: 8px;
-  border: 1px solid #dce5d8;
-  border-radius: 16px;
+  position: fixed;
+  z-index: 2100;
+  top: 0;
+  bottom: 78px;
+  left: 0;
+  width: min(72vw, 320px);
+  padding: 28px 16px;
   background: #fff;
-  box-shadow: 0 12px 30px rgba(31, 54, 27, .18);
+  border-right: 2px solid #dce5d8;
+  box-shadow: 12px 0 30px rgba(31, 54, 27, .2);
+  transform: translateX(-105%);
+  transition: transform .25s ease;
+}
+
+.header-menu.open {
+  transform: translateX(0);
+}
+
+.drawer-head {
+  margin: 8px 5px 34px;
+  color: #4c9a25;
+  font-size: 20px;
 }
 
 .header-menu a {
-  display: block;
-  padding: 14px 13px;
-  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 104px;
+  margin-bottom: 28px;
+  padding: 16px 14px;
+  border: 2px solid #dfe7dc;
+  border-radius: 22px;
   color: #303846;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
+  background: #fff;
+  box-shadow: 0 7px 17px rgba(31, 54, 27, .08);
 }
 
-.header-menu a + a {
-  border-top: 1px solid #edf0ea;
+.header-menu a > span {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eff7ec;
+  font-size: 27px;
+}
+
+.header-menu a div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.header-menu a b {
+  font-size: 18px;
+}
+
+.header-menu a small {
+  margin-top: 5px;
+  color: #69706b;
+  line-height: 1.35;
 }
 
 .header-menu a:hover,
 .header-menu a:focus {
   background: #f2f8ef;
   color: #4c9a25;
+}
+
+.menu-backdrop {
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 0;
+  bottom: 78px;
+  left: 0;
+  background: rgba(31, 39, 48, .42);
+}
+
+.menu-close {
+  position: fixed;
+  z-index: 2200;
+  top: 24px;
+  left: min(calc(72vw + 14px), 334px);
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  color: #4c9a25;
+  box-shadow: 0 5px 18px rgba(0,0,0,.2);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 .menu-list {
@@ -314,6 +386,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid #ddd;
   box-shadow: 0 -5px 14px rgba(0, 0, 0, 0.08);
+  z-index: 2300;
 }
 
 .bottom-nav a {

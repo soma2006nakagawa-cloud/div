@@ -14,12 +14,16 @@
 <p>歴史・自然・グルメを楽しく探索しよう！</p>
 </div>
 <button id="menuButton" class="menu-btn" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
-<nav id="headerMenu" class="header-menu" hidden>
-<a href="profile.html">👤 マイページ</a>
-<a href="achievements.html">🏆 実績・称号</a>
-<a href="settings.html">⚙️ 設定</a>
-</nav>
 </header>
+
+<div id="menuBackdrop" class="menu-backdrop" hidden></div>
+<aside id="headerMenu" class="header-menu" aria-hidden="true">
+<div class="drawer-head"><strong>しばコレ メニュー</strong></div>
+<a href="profile.html"><span>👤</span><div><b>マイページ</b><small>ポイントや進捗を確認</small></div></a>
+<a href="achievements.html"><span>🏆</span><div><b>実績・称号</b><small>獲得した実績を見る</small></div></a>
+<a href="settings.html"><span>⚙️</span><div><b>設定</b><small>アプリの設定を確認</small></div></a>
+</aside>
+<button id="menuCloseButton" class="menu-close" type="button" aria-label="メニューを閉じる" hidden>×</button>
 
 <main class="menu-list">
 <a class="menu-card recommend" href="recommend.html"><div class="icon">🧭</div><div class="text"><h2>おすすめ検索</h2><p>目的や時間に合う観光スポットを探す</p></div><div class="arrow">›</div></a>
