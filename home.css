@@ -22,6 +22,7 @@ body {
 }
 
 .app-header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -56,6 +57,47 @@ body {
   color: #68aa5b;
   font-size: 32px;
   cursor: pointer;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  line-height: 1;
+}
+
+.menu-btn[aria-expanded="true"] {
+  background: #f2f8ef;
+}
+
+.header-menu {
+  position: absolute;
+  z-index: 1000;
+  top: 88px;
+  right: 22px;
+  width: 210px;
+  padding: 8px;
+  border: 1px solid #dce5d8;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(31, 54, 27, .18);
+}
+
+.header-menu a {
+  display: block;
+  padding: 14px 13px;
+  border-radius: 11px;
+  color: #303846;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.header-menu a + a {
+  border-top: 1px solid #edf0ea;
+}
+
+.header-menu a:hover,
+.header-menu a:focus {
+  background: #f2f8ef;
+  color: #4c9a25;
 }
 
 .menu-list {
@@ -107,21 +149,6 @@ body {
 .arrow {
   font-size: 42px;
   font-weight: bold;
-}
-
-/* マイページ */
-.profile {
-  background: linear-gradient(90deg, #f3f7ff, #fff);
-  border-color: #cfdbf3;
-}
-
-.profile .icon {
-  background: linear-gradient(135deg, #668de0, #415fba);
-}
-
-.profile h2,
-.profile .arrow {
-  color: #4969bd;
 }
 
 /* おすすめ検索 */
