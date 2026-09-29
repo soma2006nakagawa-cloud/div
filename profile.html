@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>マイページ | しばコレ</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <div class="phone">
+    <header class="page-header">
+      <a href="index.html" class="back">← ホーム</a>
+      <div class="app-name">しばコレ</div>
+      <h1>マイページ</h1>
+      <p>あなたの街歩き記録</p>
+    </header>
+
+    <main>
+      <section class="hero-card">
+        <div class="avatar">👤</div>
+        <div>
+          <span>現在の称号</span>
+          <h2 id="currentTitle">新発田ビギナー</h2>
+          <strong id="totalScore">0 pt</strong>
+        </div>
+      </section>
+
+      <section class="next-card">
+        <div class="row"><span id="nextTitleLabel">次の称号まで</span><b id="nextTitlePoints">あと500 pt</b></div>
+        <div class="progress"><div id="titleProgress"></div></div>
+      </section>
+
+      <section class="stats" aria-label="進捗一覧">
+        <a href="collection.html" class="stat collection-stat"><span>📖</span><b id="collectionCount">0 / 21</b><small>図鑑</small></a>
+        <a href="stamp-rally.html" class="stat stamp-stat"><span>🔖</span><b id="stampCount">0 / 21</b><small>スタンプ</small></a>
+        <a href="game.html" class="stat quiz-stat"><span>💡</span><b id="quizCount">0</b><small>クイズ</small></a>
+        <a href="achievements.html" class="stat achievement-stat"><span>🏆</span><b id="achievementCount">0 / 13</b><small>実績</small></a>
+      </section>
+
+      <section class="summary-card">
+        <h2>コンプリート状況</h2>
+        <div class="summary-item"><div class="row"><span>図鑑</span><b id="collectionPercent">0%</b></div><div class="progress"><div id="collectionProgress"></div></div></div>
+        <div class="summary-item"><div class="row"><span>スタンプラリー</span><b id="stampPercent">0%</b></div><div class="progress orange"><div id="stampProgress"></div></div></div>
+        <div class="summary-item"><div class="row"><span>実績</span><b id="achievementPercent">0%</b></div><div class="progress pink"><div id="achievementProgress"></div></div></div>
+      </section>
+
+      <section class="quick-links">
+        <h2>次にすること</h2>
+        <a href="map.html">🗺️ マップで次のスポットを探す <span>›</span></a>
+        <a href="recommend.html">🧭 おすすめスポットを探す <span>›</span></a>
+        <a href="ar-tourism.html">📷 観光ARを起動する <span>›</span></a>
+      </section>
+    </main>
+  </div>
+  <script src="collection-data.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

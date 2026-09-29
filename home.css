@@ -109,6 +109,21 @@ body {
   font-weight: bold;
 }
 
+/* マイページ */
+.profile {
+  background: linear-gradient(90deg, #f3f7ff, #fff);
+  border-color: #cfdbf3;
+}
+
+.profile .icon {
+  background: linear-gradient(135deg, #668de0, #415fba);
+}
+
+.profile h2,
+.profile .arrow {
+  color: #4969bd;
+}
+
 /* おすすめ検索 */
 .recommend {
   background: linear-gradient(90deg, #f0fbff, #fff);
