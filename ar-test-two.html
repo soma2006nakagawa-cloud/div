@@ -26,8 +26,8 @@ const CENTER={lat:37.955482,lng:139.338409};
 const ACTIVE_RADIUS=300;
 const DISPLAY_HEIGHT=2;
 
-// 職能短大の中心から東西へ2.5mずつ移動し、モデル間を約5mにする。
-const HALF_DISTANCE_LNG=2.5/(111320*Math.cos(CENTER.lat*Math.PI/180));
+// 職能短大の中心から東西へ10mずつ移動し、モデル間を約20mにする。
+const HALF_DISTANCE_LNG=10/(111320*Math.cos(CENTER.lat*Math.PI/180));
 const testModels=[
   {id:"hellotore",name:"ハロトレくん",lat:CENTER.lat,lng:CENTER.lng-HALF_DISTANCE_LNG,model:"hellotore_kun.glb",scale:"1 1 1",rotation:"0 180 0"},
   {id:"station",name:"新発田駅",lat:CENTER.lat,lng:CENTER.lng+HALF_DISTANCE_LNG,model:"shibata_station.glb",scale:"1 1 1",rotation:"0 180 0"}
@@ -78,7 +78,7 @@ navigator.geolocation.watchPosition(position=>{
   else removeModels();
 
   const status=testModels.map(item=>`${item.name}：${states.get(item.id)||"未表示"}`).join("\n");
-  debug.textContent=`2モデル表示テスト（モデル間 約5m）
+  debug.textContent=`2モデル表示テスト（モデル間 約20m）
 現在位置：${lat.toFixed(8)}, ${lng.toFixed(8)}
 GPS精度：${accuracy.toFixed(1)}m
 職能短大まで：約${distance.toFixed(1)}m
