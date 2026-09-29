@@ -27,7 +27,7 @@ const DISPLAY_HEIGHT=2;
 
 const testModels=[
   {id:"hellotore",name:"職能短大：ハロトレくん",lat:37.955482,lng:139.338409,model:"hellotore_kun.glb",scale:"1 1 1",rotation:"0 180 0"},
-  {id:"uoroku",name:"ウオロク東新町店：新発田駅モデル",lat:37.943002379729215,lng:139.3447698156851,model:"shibata_station.glb",scale:"1 1 1",rotation:"0 180 0"}
+  {id:"uoroku",name:"ウオロク緑店：新発田駅モデル",lat:37.95615497972688,lng:139.33351331568522,model:"shibata_station.glb",scale:"1 1 1",rotation:"0 180 0"}
 ];
 
 const debug=document.getElementById("debug");
@@ -80,7 +80,7 @@ navigator.geolocation.watchPosition(position=>{
 現在位置：${lat.toFixed(8)}, ${lng.toFixed(8)}
 GPS精度：${accuracy.toFixed(1)}m
 職能短大まで：約${distances[0].toFixed(1)}m
-ウオロク東新町店まで：約${distances[1].toFixed(1)}m
+ウオロク緑店まで：約${distances[1].toFixed(1)}m
 
 ${activeDistance<=ACTIVE_RADIUS?status:"どちらかの地点から300m以内に入ると2体表示します"}`;
 },error=>{
