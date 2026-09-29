@@ -6,15 +6,19 @@ body {
 }
 
 .evac-header {
-  background: #e6424a;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #ef5a61, #dc3842);
   color: white;
   text-align: center;
-  padding: 14px 10px;
+  padding: 54px 24px 28px;
   position: relative;
 }
 
 .evac-header h1 {
   margin: 0;
+  font-size: 32px;
 }
 
 .evac-header p {
@@ -24,16 +28,25 @@ body {
 .back {
   position: absolute;
   left: 12px;
-  top: 15px;
+  top: 18px;
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
+.app-name {
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: .9;
+}
+
 .container {
   width: 92%;
-  max-width: 900px;
-  margin: 16px auto;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 22px 18px 40px;
+  background: #eef5ff;
 }
 
 .card {
@@ -79,13 +92,6 @@ button:hover {
 }
 
 @media (max-width: 600px) {
-
-  .back {
-    position: static;
-    display: block;
-    margin-bottom: 8px;
-  }
-
   #map {
     height: 380px;
   }

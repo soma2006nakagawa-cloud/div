@@ -15,26 +15,30 @@ header {
     width: 100%;
     max-width: 430px;
     margin: 0 auto;
-    background: linear-gradient(135deg, #9c4b4b, #a63d3d);
+    background: linear-gradient(135deg, #69b957, #f2a51a);
     color: white;
     text-align: center;
-    padding: 35px 20px;
+    padding: 54px 54px 28px;
 }
 
 .back-button {
     position: absolute;
     left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 18px;
     color: white;
     text-decoration: none;
-    font-size: 40px;
+    font-size: 18px;
+    font-weight: bold;
     line-height: 1;
+}
+
+.back-button span {
+    font-size: 14px;
 }
 
 .app-name {
     margin-bottom: 4px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     opacity: .9;
 }
@@ -46,6 +50,7 @@ header h1 {
 
 header p {
     margin: 0;
+    line-height: 1.5;
 }
 
 main {
@@ -183,5 +188,9 @@ main {
     }
     .question {
         padding: 20px 15px;
+    }
+
+    header {
+        padding: 52px 24px 28px;
     }
 }
