@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>2モデル表示テスト | しばコレ</title>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Yu Gothic",system-ui,sans-serif}
+#debug{position:fixed;top:10px;left:10px;right:10px;z-index:9999;padding:10px;border-radius:10px;background:rgba(0,0,0,.74);color:#75ff75;font-size:13px;line-height:1.45;white-space:pre-line;pointer-events:none}
+#back{position:fixed;right:10px;bottom:12px;z-index:9999}
+#back a{display:block;border-radius:10px;padding:11px 15px;background:#4c9a25;color:#fff;text-decoration:none;font-size:14px;font-weight:bold}
+</style>
+</head>
+<body>
+<div id="debug">GPS取得待機中...</div>
+<div id="back"><a href="index.html">← ホーム</a></div>
+
+<a-scene id="scene" vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:0;gpsTimeInterval:1000;debugUIEnabled:false;">
+  <a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
+</a-scene>
+
+<script>
+const CENTER={lat:37.955482,lng:139.338409};
+const ACTIVE_RADIUS=300;
+const DISPLAY_HEIGHT=2;
+
+// 職能短大の中心から東西へ2.5mずつ移動し、モデル間を約5mにする。
+const HALF_DISTANCE_LNG=2.5/(111320*Math.cos(CENTER.lat*Math.PI/180));
+const testModels=[
+  {id:"hellotore",name:"ハロトレくん",lat:CENTER.lat,lng:CENTER.lng-HALF_DISTANCE_LNG,model:"hellotore_kun.glb",scale:"1 1 1",rotation:"0 180 0"},
+  {id:"station",name:"新発田駅",lat:CENTER.lat,lng:CENTER.lng+HALF_DISTANCE_LNG,model:"shibata_station.glb",scale:"1 1 1",rotation:"0 180 0"}
+];
+
+const debug=document.getElementById("debug");
+const scene=document.getElementById("scene");
+const entities=new Map();
+const states=new Map();
+
+function rad(value){return value*Math.PI/180}
+function distanceMeters(lat1,lng1,lat2,lng2){
+  const R=6371000,dLat=rad(lat2-lat1),dLng=rad(lng2-lng1);
+  const a=Math.sin(dLat/2)**2+Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function createModels(){
+  testModels.forEach(item=>{
+    if(entities.has(item.id))return;
+    const entity=document.createElement("a-entity");
+    entity.setAttribute("gps-entity-place",`latitude:${item.lat}; longitude:${item.lng};`);
+    entity.setAttribute("gltf-model",item.model);
+    entity.setAttribute("scale",item.scale);
+    entity.setAttribute("position",`0 ${DISPLAY_HEIGHT} 0`);
+    entity.setAttribute("rotation",item.rotation);
+    states.set(item.id,"読み込み中");
+    entity.addEventListener("model-loaded",()=>states.set(item.id,"表示中"));
+    entity.addEventListener("model-error",error=>{
+      states.set(item.id,"読込失敗");
+      console.error(item.name,error.detail);
+    });
+    scene.appendChild(entity);
+    entities.set(item.id,entity);
+  });
+}
+
+function removeModels(){
+  entities.forEach(entity=>entity.remove());
+  entities.clear();
+  states.clear();
+}
+
+navigator.geolocation.watchPosition(position=>{
+  const {latitude:lat,longitude:lng,accuracy}=position.coords;
+  const distance=distanceMeters(lat,lng,CENTER.lat,CENTER.lng);
+  if(distance<=ACTIVE_RADIUS)createModels();
+  else removeModels();
+
+  const status=testModels.map(item=>`${item.name}：${states.get(item.id)||"未表示"}`).join("\n");
+  debug.textContent=`2モデル表示テスト（モデル間 約5m）
+現在位置：${lat.toFixed(8)}, ${lng.toFixed(8)}
+GPS精度：${accuracy.toFixed(1)}m
+職能短大まで：約${distance.toFixed(1)}m
+
+${distance<=ACTIVE_RADIUS?status:"300m以内に入ると2体表示します"}`;
+},error=>{
+  debug.textContent=`位置情報エラー\n${error.message}`;
+},{enableHighAccuracy:true,maximumAge:0,timeout:15000});
+</script>
+</body>
+</html>
