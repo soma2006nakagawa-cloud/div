@@ -35,9 +35,20 @@ const goals=[
 let currentMarker=null;
 let routeLine=null;
 
+function matchingCollectionSpot(goal){
+    return (window.COLLECTION_SPOTS||[]).find(spot=>
+        spot.name===goal.name||
+        window.CollectionTracker.distanceMeters(spot.lat,spot.lng,goal.lat,goal.lng)<50
+    );
+}
+
 goals.forEach(goal=>{
     const marker=L.marker([goal.lat,goal.lng]).addTo(map);
-    marker.bindPopup(`<b>${goal.name}</b><br>`);
+    const collectionSpot=matchingCollectionSpot(goal);
+    const detailLink=collectionSpot
+        ?`<a class="popup-detail" href="spot-detail.html?id=${encodeURIComponent(collectionSpot.id)}">スポット詳細を見る</a>`
+        :"";
+    marker.bindPopup(`<b>${goal.name}</b>${detailLink}`);
     marker.on("click",()=>startNavigation(goal));
 });
 
@@ -71,7 +82,7 @@ async function showRoute(myLat,myLng,goal){
         document.getElementById("info").innerHTML=`
             <b>${goal.name}</b><br>
             距離：${distance} km<br>
-            車での所要時間：約 ${minutes} 分
+            徒歩での所要時間：約 ${minutes} 分
         `;
     }catch(error){
         console.error(error);

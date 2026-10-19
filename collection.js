@@ -36,6 +36,7 @@ function renderCollection(){
       <model-viewer src="${escapeHtml(spot.model)}" alt="${escapeHtml(spot.name)}の3Dモデル" camera-controls auto-rotate shadow-intensity="1" loading="lazy"></model-viewer>
       ${photo}
       <p class="description">${escapeHtml(spot.description)}</p>
+      <a class="detail-link" href="spot-detail.html?id=${encodeURIComponent(spot.id)}">詳しく見る <span aria-hidden="true">›</span></a>
     </article>`;
   }).join("");
 }

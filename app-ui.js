@@ -2,7 +2,7 @@
   const file=(location.pathname.split("/").pop()||"index.html").toLowerCase();
   const items=[
     {href:"index.html",icon:"🏠",label:"ホーム",files:["index.html",""]},
-    {href:"collection.html",icon:"📖",label:"ずかん",files:["collection.html"]},
+    {href:"collection.html",icon:"📖",label:"ずかん",files:["collection.html","spot-detail.html"]},
     {href:"map.html",icon:"🗺️",label:"ちず",files:["map.html"]},
     {href:"evacuation.html",icon:"🛡️",label:"ひなん",files:["evacuation.html"]}
   ];
