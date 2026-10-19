@@ -1,3 +1,12 @@
+*,*::before,*::after {
+  box-sizing: border-box;
+}
+
+html,body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: "Yu Gothic", system-ui, sans-serif;
@@ -180,14 +189,14 @@ button:hover {
 }
 
 /* しばコレ共通UI */
-.shibakore-page main.evacuation-page{width:100%;padding:15px;background:transparent}
-.shibakore-page .evacuation-page .menu-card{display:grid;grid-template-columns:54px 1fr 18px;gap:12px;min-height:86px;margin:0 0 14px;padding:14px;border:1px solid #f0d3d4;border-radius:19px;background:linear-gradient(135deg,#fff,#fff7f6);box-shadow:0 9px 24px rgba(92,42,42,.08)}
+.shibakore-page main.evacuation-page{width:min(100%,460px);max-width:460px;margin:0 auto;padding:15px 15px 98px;background:transparent}
+.shibakore-page .evacuation-page .menu-card{display:grid;grid-template-columns:54px minmax(0,1fr) 18px;gap:12px;width:100%;max-width:100%;min-height:86px;margin:0 0 14px;padding:14px;border:1px solid #f0d3d4;border-radius:19px;background:linear-gradient(135deg,#fff,#fff7f6);box-shadow:0 9px 24px rgba(92,42,42,.08)}
 .shibakore-page .evacuation-page .menu-card .icon{width:54px;height:54px;border-radius:17px;font-size:26px}
 .shibakore-page .evacuation-page .menu-card .text{min-width:0;margin:0}
 .shibakore-page .evacuation-page .menu-card .text h2{margin:0 0 4px;color:#d9444c;font-size:18px}
 .shibakore-page .evacuation-page .menu-card .text p{margin:0;color:#68716a;font-size:11px;line-height:1.5}
 .shibakore-page .evacuation-page .menu-card .arrow{font-size:25px;color:#d9444c}
-.shibakore-page .evacuation-page .card{margin-bottom:13px;padding:17px;border:1px solid #e3e9e0;border-radius:19px;box-shadow:0 9px 24px rgba(43,73,38,.09)}
+.shibakore-page .evacuation-page .card{width:100%;max-width:100%;margin-bottom:13px;padding:17px;overflow:hidden;border:1px solid #e3e9e0;border-radius:19px;box-shadow:0 9px 24px rgba(43,73,38,.09)}
 .shibakore-page .evacuation-page .card h2{margin:0 0 13px;font-size:20px}
 .shibakore-page .evacuation-page #nearestInfo h3{margin:0 0 12px;font-size:18px}
 .shibakore-page .evacuation-page #nearestInfo p{font-size:13px;line-height:1.55}
@@ -201,5 +210,5 @@ button:hover {
   .shibakore-page .evac-header{min-height:126px;padding-top:calc(27px + env(safe-area-inset-top));padding-bottom:20px}
   .shibakore-page .evac-header h1{font-size:25px;line-height:1.25}
   .shibakore-page .evac-header p{font-size:12px;line-height:1.45}
-  .shibakore-page main.evacuation-page{margin:0 auto;padding:14px 13px 26px}
+  .shibakore-page main.evacuation-page{margin:0 auto;padding:14px 13px 98px}
 }
