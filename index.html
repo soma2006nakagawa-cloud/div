@@ -1,59 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>しばコレ</title>
-<link rel="stylesheet" href="home.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <meta name="theme-color" content="#4f9f38">
+  <title>しばコレ</title>
+  <link rel="stylesheet" href="home.css">
 </head>
 <body>
 <div class="phone">
-<header class="app-header">
-<div>
-<h1><span>しば</span><b>コレ</b></h1>
-<p>歴史・自然・グルメを楽しく探索しよう！</p>
-</div>
-<button id="menuButton" class="menu-btn" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
-</header>
+  <header class="app-header">
+    <div class="brand">
+      <p class="eyebrow">新発田まち歩きアプリ</p>
+      <h1><span>しば</span><b>コレ</b></h1>
+      <p class="tagline">見つける、歩く、集める。</p>
+    </div>
+    <button id="menuButton" class="menu-btn" type="button" aria-label="メニューを開く" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
 
-<div id="menuBackdrop" class="menu-backdrop" hidden></div>
-<aside id="headerMenu" class="header-menu" aria-hidden="true">
-<div class="drawer-head"><strong>しばコレ メニュー</strong></div>
-<a href="profile.html"><span>👤</span><div><b>マイページ</b><small>ポイントや進捗を確認</small></div></a>
-<a href="achievements.html"><span>🏆</span><div><b>実績・称号</b><small>獲得した実績を見る</small></div></a>
-<a href="settings.html"><span>⚙️</span><div><b>設定</b><small>アプリの設定を確認</small></div></a>
-</aside>
-<button id="menuCloseButton" class="menu-close" type="button" aria-label="メニューを閉じる" hidden>×</button>
+  <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+  <aside id="headerMenu" class="header-menu" aria-hidden="true">
+    <div class="drawer-head"><div class="drawer-logo">しば<span>コレ</span></div><button id="menuCloseButton" type="button" aria-label="メニューを閉じる">×</button></div>
+    <nav aria-label="メニュー">
+      <a href="profile.html"><i>👤</i><div><b>マイページ</b><small>ポイントや進み具合を確認</small></div><strong>›</strong></a>
+      <a href="achievements.html"><i>🏆</i><div><b>実績・称号</b><small>獲得した実績を見る</small></div><strong>›</strong></a>
+      <a href="settings.html"><i>⚙️</i><div><b>設定</b><small>アプリの設定を確認</small></div><strong>›</strong></a>
+    </nav>
+    <p class="drawer-note">新発田を歩いて、まちの魅力を集めよう。</p>
+  </aside>
 
-<main class="menu-list">
-<a class="menu-card recommend" href="recommend.html"><div class="icon">🧭</div><div class="text"><h2>おすすめ検索</h2><p>目的や時間に合う観光スポットを探す</p></div><div class="arrow">›</div></a>
-<a class="menu-card green" href="map.html"><div class="icon">🗺️</div><div class="text"><h2>マップ</h2><p>地図でスポットやルートを確認</p></div><div class="arrow">›</div></a>
-  <a class="menu-card blue" href="ar-tourism.html">
-  <div class="icon">📷</div>
+  <main>
+    <a class="progress-card" href="profile.html" aria-label="マイページで進捗を見る">
+      <div class="progress-top"><div><span>現在の称号</span><h2 id="homeTitle">新発田ビギナー</h2></div><strong id="homePoints">0 pt</strong></div>
+      <div class="progress-track"><div id="homeProgress"></div></div>
+      <div class="progress-stats">
+        <div><b id="homeCollection">0</b><span>図鑑</span></div>
+        <div><b id="homeStamps">0</b><span>スタンプ</span></div>
+        <div><b id="homeQuizzes">0</b><span>クイズ</span></div>
+      </div>
+      <span class="progress-link">詳しく見る ›</span>
+    </a>
 
-  <div class="text">
-    <h2>観光AR</h2>
-    <p>観光スポットの3DモデルをARで表示</p>
-  </div>
+    <section class="feature-section">
+      <div class="section-heading"><span class="section-icon">🔎</span><div><p>EXPLORE</p><h2>探す</h2></div></div>
+      <div class="feature-grid">
+        <a class="feature-card recommend" href="recommend.html"><span class="feature-icon">🧭</span><div><h3>おすすめ</h3><p>目的に合う場所を検索</p></div><strong>›</strong></a>
+        <a class="feature-card map" href="map.html"><span class="feature-icon">🗺️</span><div><h3>マップ</h3><p>スポットとルートを確認</p></div><strong>›</strong></a>
+        <a class="feature-card spots" href="spots.html"><span class="feature-icon">⛩️</span><div><h3>観光スポット</h3><p>新発田の見どころを見る</p></div><strong>›</strong></a>
+      </div>
+    </section>
 
-  <div class="arrow">›</div>
-</a>
-<a class="menu-card ar-test" href="ar-test-two.html"><div class="icon">🧪</div><div class="text"><h2>ARテスト</h2><p>職能短大・ウオロク緑店で全モデルを表示</p></div><div class="arrow">›</div></a>
-<a class="menu-card red" href="evacuation.html"><div class="icon">🏠</div><div class="text"><h2>避難所</h2><p>最寄りの避難所を確認</p></div><div class="arrow">›</div></a>
-<a class="menu-card orange" href="spots.html"><div class="icon">⛩️</div><div class="text"><h2>観光スポット</h2><p>新発田の見どころをチェック</p></div><div class="arrow">›</div></a>
-<a class="menu-card purple" href="collection.html"><div class="icon">📖</div><div class="text"><h2>コレクション</h2><p>集めたスポットを図鑑で確認</p></div><div class="arrow">›</div></a>
-<a class="menu-card stamp" href="stamp-rally.html"><div class="icon">🔖</div><div class="text"><h2>スタンプラリー</h2><p>観光スポットを巡ってスタンプを集めよう</p></div><div class="arrow">›</div></a>
-<a class="menu-card pink" href="achievements.html"><div class="icon">🏆</div><div class="text"><h2>実績・称号</h2><p>達成した実績と現在の称号を確認</p></div><div class="arrow">›</div></a>
-<a class="menu-card yellow" href="game.html"><div class="icon">🎮</div><div class="text"><h2>ゲーム</h2><p>ポイントを貯めて楽しもう</p></div><div class="arrow">›</div></a>
-<a class="menu-card teal" href="settings.html"><div class="icon">⚙️</div><div class="text"><h2>設定</h2><p>アプリの設定や情報を確認</p></div><div class="arrow">›</div></a>
-</main>
+    <section class="feature-section">
+      <div class="section-heading"><span class="section-icon">✨</span><div><p>EXPERIENCE</p><h2>体験する</h2></div></div>
+      <div class="feature-grid">
+        <a class="feature-card ar" href="ar-tourism.html"><span class="feature-icon">📷</span><div><h3>観光AR</h3><p>3Dモデルを現地で体験</p></div><strong>›</strong></a>
+        <a class="feature-card quiz" href="game.html"><span class="feature-icon">💡</span><div><h3>クイズ</h3><p>新発田の知識に挑戦</p></div><strong>›</strong></a>
+        <a class="feature-card stamp" href="stamp-rally.html"><span class="feature-icon">🔖</span><div><h3>スタンプラリー</h3><p>スポットを巡って収集</p></div><strong>›</strong></a>
+      </div>
+    </section>
 
-<nav class="bottom-nav">
-<a href="index.html" class="active"><span>🏠</span><p>ホーム</p></a>
-<a href="collection.html"><span>📖</span><p>ずかん</p></a>
-<a href="map.html"><span>🗺️</span><p>ちず</p></a>
-<a href="evacuation.html"><span>🗺️</span><p>ひなん</p></a>
-</nav>
+    <section class="feature-section">
+      <div class="section-heading"><span class="section-icon">🎁</span><div><p>COLLECT</p><h2>集める</h2></div></div>
+      <div class="feature-grid two-column">
+        <a class="feature-card collection" href="collection.html"><span class="feature-icon">📖</span><div><h3>コレクション</h3><p>解放したモデルや写真</p></div><strong>›</strong></a>
+        <a class="feature-card achievement" href="achievements.html"><span class="feature-icon">🏆</span><div><h3>実績・称号</h3><p>街歩きの成果を確認</p></div><strong>›</strong></a>
+      </div>
+    </section>
+
+    <section class="feature-section safety-section">
+      <div class="section-heading"><span class="section-icon">🛡️</span><div><p>SAFETY</p><h2>安全</h2></div></div>
+      <a class="safety-card" href="evacuation.html"><span>🏠</span><div><h3>避難所を確認</h3><p>現在地から近い避難所とAR案内</p></div><strong>›</strong></a>
+    </section>
+
+    <details class="developer-tools">
+      <summary>開発・動作確認</summary>
+      <a href="ar-test-two.html">🧪 全モデルARテスト <span>›</span></a>
+    </details>
+  </main>
+
+  <nav class="bottom-nav" aria-label="メインナビゲーション">
+    <a href="index.html" class="active" aria-current="page"><span>🏠</span><p>ホーム</p></a>
+    <a href="collection.html"><span>📖</span><p>ずかん</p></a>
+    <a href="map.html"><span>🗺️</span><p>ちず</p></a>
+    <a href="evacuation.html"><span>🛡️</span><p>ひなん</p></a>
+  </nav>
 </div>
 <script src="home.js"></script>
 </body>
