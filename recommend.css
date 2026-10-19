@@ -205,3 +205,5 @@ main {
 .shibakore-page .recommend-page .buttons button.selected{border-color:#397f2b;background:#4f9f38;color:#fff}
 .shibakore-page .recommend-page #searchButton{margin:20px 0;padding:16px;border-radius:16px;font-size:17px}
 .shibakore-page .recommend-page #result h2{color:#347b26;font-size:20px}
+.shibakore-page .page-header .back-button{font-size:0}
+.shibakore-page .page-header .back-button span{display:none!important}

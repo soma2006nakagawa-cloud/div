@@ -194,3 +194,12 @@ button:hover {
 .shibakore-page .evacuation-page #nearestInfo button{width:100%;margin-top:5px;border-radius:13px;font-size:14px;font-weight:bold}
 .shibakore-page .evacuation-page #top5{margin:0;padding-left:23px}.shibakore-page .evacuation-page #top5 li{padding:3px 0;font-size:13px;line-height:1.5}
 .shibakore-page .evacuation-page #map{height:360px;border-radius:15px}
+.shibakore-page .evac-header{width:100%;max-width:460px;margin:0 auto;padding-right:58px;padding-left:58px}
+.shibakore-page .evac-header .back-button{top:calc(20px + env(safe-area-inset-top));left:15px}
+.shibakore-page .evac-header .app-name,.shibakore-page .evac-header h1,.shibakore-page .evac-header p{width:100%;text-align:center}
+@media(max-width:480px){
+  .shibakore-page .evac-header{min-height:126px;padding-top:calc(27px + env(safe-area-inset-top));padding-bottom:20px}
+  .shibakore-page .evac-header h1{font-size:25px;line-height:1.25}
+  .shibakore-page .evac-header p{font-size:12px;line-height:1.45}
+  .shibakore-page main.evacuation-page{margin:0 auto;padding:14px 13px 26px}
+}
