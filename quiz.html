@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>クイズ | しばコレ</title>
     <link rel="stylesheet" href="quiz.css">
+    <link rel="stylesheet" href="app-ui.css">
 </head>
-<body>
+<body class="shibakore-page">
+    <header class="page-header">
+      <a class="back-button" href="game.html" aria-label="クイズマップへ戻る">‹</a>
+      <p>しばコレ</p>
+      <h1>スポットクイズ</h1>
+    </header>
+    <main class="quiz-page">
     <div class="quiz-container">
         <h2 id="title">〇×クイズ</h2>
         <div id="quizBox"></div>
@@ -22,6 +29,8 @@
         <p id="scoreText"></p>
         <a href="game.html">← クイズマップに戻る</a>
     </div>
+    </main>
     <script src="quiz.js"></script>
+    <script src="app-ui.js"></script>
 </body>
 </html>

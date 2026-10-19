@@ -6,22 +6,27 @@
     <title>ランドマーククイズ | しばコレ</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="app-ui.css">
 </head>
-<body>
-    <header>
+<body class="shibakore-page">
+    <header class="page-header">
         <a class="back-button" href="index.html" aria-label="ホームへ戻る">‹</a>
+        <p>しばコレ</p>
         <h1>ランドマーククイズ</h1>
     </header>
-    <div id="totalScore">現在の得点：0点</div>
-    <div id="map"></div>
-    <div id="coords"></div>
-    <div id="result">現在地を取得中...</div>
-    <p><a class="achievement-link" href="achievements.html">🏆 実績・称号を見る</a></p>
-    <p><a class="achievement-link" href="stamp-rally.html">🔖 スタンプラリーを見る</a></p>
-    <button id="resetButton" onclick="resetGame()">得点・回答履歴をリセット</button>
+    <main class="game-page">
+      <div id="totalScore">現在の得点：0点</div>
+      <div id="map"></div>
+      <div id="coords"></div>
+      <div id="result">現在地を取得中...</div>
+      <p><a class="achievement-link" href="achievements.html">🏆 実績・称号を見る</a></p>
+      <p><a class="achievement-link" href="stamp-rally.html">🔖 スタンプラリーを見る</a></p>
+      <button id="resetButton" onclick="resetGame()">得点・回答履歴をリセット</button>
+    </main>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="collection-data.js"></script>
     <script src="collection-tracker.js"></script>
     <script src="game.js"></script>
+    <script src="app-ui.js"></script>
 </body>
 </html>
