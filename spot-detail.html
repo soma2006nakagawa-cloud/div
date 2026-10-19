@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>スポット詳細 | しばコレ</title>
+<link rel="stylesheet" href="spot-detail.css">
+<link rel="stylesheet" href="app-ui.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+</head>
+<body class="shibakore-page">
+<header class="page-header">
+  <a class="back-button" href="collection.html" aria-label="図鑑へ戻る">‹</a>
+  <p>しばコレ図鑑</p>
+  <h1>スポット詳細</h1>
+</header>
+
+<main id="spotDetail" class="detail-page" aria-live="polite">
+  <section class="detail-loading">スポット情報を読み込んでいます...</section>
+</main>
+
+<script src="collection-data.js"></script>
+<script src="collection-tracker.js"></script>
+<script src="spot-detail.js"></script>
+<script src="app-ui.js"></script>
+</body>
+</html>
