@@ -4,8 +4,9 @@ html{background:#edf1ea}
 body{margin:0;min-height:100vh;background:linear-gradient(145deg,#eef4eb,#f7f5ed);font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",system-ui,sans-serif;color:var(--ink)}
 button,a{font:inherit;-webkit-tap-highlight-color:transparent}
 .phone{width:100%;max-width:460px;min-height:100vh;margin:0 auto;background:var(--bg);position:relative;padding-bottom:92px;overflow:hidden;box-shadow:0 0 38px rgba(24,47,21,.13)}
-.app-header{position:relative;display:flex;align-items:center;justify-content:space-between;padding:calc(25px + env(safe-area-inset-top)) 22px 25px;background:linear-gradient(150deg,#fff 5%,#f4faef 100%);border-bottom:1px solid #e4ece0}
-.app-header:after{content:"";position:absolute;right:-46px;bottom:-56px;width:170px;height:170px;border-radius:50%;background:rgba(118,190,76,.08)}
+.app-header{position:relative;display:flex;align-items:center;justify-content:space-between;padding:calc(25px + env(safe-area-inset-top)) 22px 25px;background:#fff;border-bottom:1px solid #e4ece0;isolation:isolate;overflow:hidden}
+.app-header:before{content:"";position:absolute;z-index:-2;inset:0;background:url("castle.png") center 42%/cover no-repeat;opacity:.48;filter:saturate(.82)}
+.app-header:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(248,252,245,.84) 52%,rgba(244,250,239,.4) 100%)}
 .brand{position:relative;z-index:1}.eyebrow{margin:0 0 3px;color:var(--green-dark);font-size:11px;font-weight:800;letter-spacing:.12em}.app-header h1{margin:0;font-size:34px;line-height:1.08;letter-spacing:-.04em}.app-header h1 span{color:var(--green)}.app-header h1 b{color:var(--orange)}.tagline{margin:7px 0 0;color:#59635a;font-size:13px;font-weight:700;letter-spacing:.04em}
 .menu-btn{position:relative;z-index:2;display:grid;place-content:center;gap:5px;width:48px;height:48px;border:1px solid #dfe9da;border-radius:15px;background:#fff;box-shadow:0 6px 16px rgba(54,93,46,.1);cursor:pointer}.menu-btn span{display:block;width:22px;height:2.5px;border-radius:3px;background:var(--green)}.menu-btn[aria-expanded=true]{background:#edf7e9}
 main{padding:18px 16px 28px}
