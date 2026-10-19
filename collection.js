@@ -18,8 +18,9 @@ function renderCollection(){
       return `<article class="collection-card locked">
         <div class="number">No.${String(index+1).padStart(2,"0")}</div>
         <div class="lock-icon">🔒</div>
-        <h2>？？？？？</h2>
+        <h2>${escapeHtml(spot.name)}</h2>
         <p>このスポットの100m以内で解放</p>
+        <a class="detail-link locked-link" href="spot-detail.html?id=${encodeURIComponent(spot.id)}">詳細を見る <span aria-hidden="true">›</span></a>
       </article>`;
     }
 
