@@ -14,6 +14,7 @@ body{margin:0;overflow:hidden;font-family:sans-serif}
 video,canvas{position:fixed!important;top:0!important;left:-5vw!important;width:110vw!important;height:100vh!important;object-fit:cover!important}
 .a-enter-vr,.a-enter-ar{display:none!important}
 </style>
+<link rel="stylesheet" href="ar-ui.css">
 </head>
 <body>
 <div id="debug">GPS取得待機中...</div>
@@ -337,5 +338,6 @@ GPS精度:${p.coords.accuracy.toFixed(1)} m
 AR地点数:51件`;},
 e=>{d.textContent=e.message;},{enableHighAccuracy:true,maximumAge:0,timeout:10000});
 </script>
+<script src="ar-ui.js"></script>
 </body>
 </html>
