@@ -19,4 +19,6 @@ model-viewer{display:block;width:100%;height:230px;border-radius:13px;background
 .spot-photo,.photo-placeholder{display:block;width:100%;height:180px;margin-top:12px;border-radius:13px;object-fit:cover}
 .photo-placeholder{display:flex;align-items:center;justify-content:center;color:#89928d;background:#e7e9e8}
 .description{margin:14px 3px 2px;line-height:1.75;font-size:14px}
+.detail-link{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding:13px 15px;border-radius:13px;background:#edf7e9;color:#277a30;text-decoration:none;font-weight:bold}
+.detail-link span{font-size:24px;line-height:1}
 @media(max-width:480px){main{padding:13px}.collection-header h1{font-size:22px}.collection-grid{grid-template-columns:1fr}model-viewer{height:210px}}
