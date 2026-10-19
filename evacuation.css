@@ -178,3 +178,19 @@ button:hover {
 
     font-weight:bold;
 }
+
+/* しばコレ共通UI */
+.shibakore-page main.evacuation-page{width:100%;padding:15px;background:transparent}
+.shibakore-page .evacuation-page .menu-card{display:grid;grid-template-columns:54px 1fr 18px;gap:12px;min-height:86px;margin:0 0 14px;padding:14px;border:1px solid #f0d3d4;border-radius:19px;background:linear-gradient(135deg,#fff,#fff7f6);box-shadow:0 9px 24px rgba(92,42,42,.08)}
+.shibakore-page .evacuation-page .menu-card .icon{width:54px;height:54px;border-radius:17px;font-size:26px}
+.shibakore-page .evacuation-page .menu-card .text{min-width:0;margin:0}
+.shibakore-page .evacuation-page .menu-card .text h2{margin:0 0 4px;color:#d9444c;font-size:18px}
+.shibakore-page .evacuation-page .menu-card .text p{margin:0;color:#68716a;font-size:11px;line-height:1.5}
+.shibakore-page .evacuation-page .menu-card .arrow{font-size:25px;color:#d9444c}
+.shibakore-page .evacuation-page .card{margin-bottom:13px;padding:17px;border:1px solid #e3e9e0;border-radius:19px;box-shadow:0 9px 24px rgba(43,73,38,.09)}
+.shibakore-page .evacuation-page .card h2{margin:0 0 13px;font-size:20px}
+.shibakore-page .evacuation-page #nearestInfo h3{margin:0 0 12px;font-size:18px}
+.shibakore-page .evacuation-page #nearestInfo p{font-size:13px;line-height:1.55}
+.shibakore-page .evacuation-page #nearestInfo button{width:100%;margin-top:5px;border-radius:13px;font-size:14px;font-weight:bold}
+.shibakore-page .evacuation-page #top5{margin:0;padding-left:23px}.shibakore-page .evacuation-page #top5 li{padding:3px 0;font-size:13px;line-height:1.5}
+.shibakore-page .evacuation-page #map{height:360px;border-radius:15px}

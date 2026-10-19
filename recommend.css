@@ -194,3 +194,14 @@ main {
         padding: 52px 24px 28px;
     }
 }
+
+/* しばコレ共通UI */
+.shibakore-page main.recommend-page{padding:17px 15px 30px;background:transparent}
+.shibakore-page .recommend-page .question{margin-bottom:14px;padding:19px 16px;border:1px solid #e3e9e0;border-radius:19px;box-shadow:0 9px 24px rgba(43,73,38,.09)}
+.shibakore-page .recommend-page .question h2{margin:0 0 15px;color:#347b26;font-size:19px}
+.shibakore-page .recommend-page .buttons{grid-template-columns:1fr;gap:9px}
+.shibakore-page .recommend-page .buttons button{min-height:55px;padding:12px;border:1.5px solid #dfe6dc;border-radius:14px;background:#fff;color:#29342b;font-size:14px;font-weight:700}
+.shibakore-page .recommend-page .buttons button:hover{background:#f3f8f0;border-color:#8cbd7d}
+.shibakore-page .recommend-page .buttons button.selected{border-color:#397f2b;background:#4f9f38;color:#fff}
+.shibakore-page .recommend-page #searchButton{margin:20px 0;padding:16px;border-radius:16px;font-size:17px}
+.shibakore-page .recommend-page #result h2{color:#347b26;font-size:20px}
