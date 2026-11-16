@@ -18,8 +18,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden}
 <div id="debug">GPS取得待機中...</div>
 <div id="back"><button onclick="location.href='index.html'">← ホーム</button></div>
 
-<a-scene vr-mode-ui="enabled:false" embedded arjs="sourceType:webcam;gpsMinDistance:5;gpsTimeInterval:1000;debugUIEnabled:false;">
-<a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
+<a-scene vr-mode-ui="enabled:false" embedded renderer="antialias:true;colorManagement:true;logarithmicDepthBuffer:true" arjs="sourceType:webcam;gpsMinDistance:5;gpsTimeInterval:1000;debugUIEnabled:false;">
+<a-camera gps-camera rotation-reader camera="far:500;near:0.5"></a-camera>
 
 <a-entity id="model-castle" gps-entity-place="latitude:37.954824724542696;longitude:139.326001834219947;" gltf-model="shibata_jyo.glb" scale="1 1 1" position="0 2 0" rotation="0 180 0" visible="false"></a-entity>
 <a-entity id="model-zousyunkaku" gps-entity-place="latitude:37.94389807273562;longitude:139.3317142467578;" gltf-model="Zousyunkaku.glb" scale="1 1 1" position="0 2 0" rotation="0 180 0" visible="false"></a-entity>

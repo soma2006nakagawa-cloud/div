@@ -19,8 +19,8 @@ video,canvas{position:fixed!important;top:0!important;left:-5vw!important;width:
 <body>
 <div id="debug">GPS取得待機中...</div>
 <div id="back"><button onclick="location.href='index.html'">← ホーム</button></div>
-<a-scene vr-mode-ui="enabled:false" embedded renderer="antialias:true;alpha:true" arjs="sourceType:webcam;sourceWidth:1280;sourceHeight:720;displayWidth:1280;displayHeight:720;gpsMinDistance:5;gpsTimeInterval:1000;">
-<a-camera gps-camera rotation-reader camera="far:10000;near:0.1"></a-camera>
+<a-scene vr-mode-ui="enabled:false" embedded renderer="antialias:true;alpha:true;colorManagement:true;logarithmicDepthBuffer:true" arjs="sourceType:webcam;sourceWidth:1280;sourceHeight:720;displayWidth:1280;displayHeight:720;gpsMinDistance:5;gpsTimeInterval:1000;">
+<a-camera gps-camera rotation-reader camera="far:500;near:0.5"></a-camera>
 
     <!-- 外ヶ輪小学校 / 新潟県新発田市中央町5-8-9 -->
     <a-entity gps-entity-place="latitude:37.9543091; longitude:139.3294243;">
